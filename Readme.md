@@ -1,7 +1,7 @@
 # Учебный проект «Угадай мелодию» [![Build status][travis-image]][travis-url]
 
 * Студент: [Геворк Геворкян](https://up.htmlacademy.ru/react/2/user/497023).
-* Наставник: `Неизвестно`.
+* Наставник: [Александр Погорелов](https://up.htmlacademy.ru/react/2/user/1031283).
 
 ---
 
