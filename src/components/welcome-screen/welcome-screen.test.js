@@ -8,6 +8,7 @@ it(`render correctly WelcomeScreen component`, () => {
         <WelcomeScreen
           time = {1}
           errorAmount = {1}
+          onWelcomeButtonClick={jest.fn()}
         />
     )
     .toJSON();
