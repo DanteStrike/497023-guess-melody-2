@@ -6,8 +6,8 @@ it(`render correctly WelcomeScreen component`, () => {
   const WelcomeScreenComponent = renderer
     .create(
         <WelcomeScreen
-          time = {0}
-          errorAmount = {0}
+          time = {1}
+          errorAmount = {1}
         />
     )
     .toJSON();
