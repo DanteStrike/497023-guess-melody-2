@@ -5,10 +5,14 @@ import WelcomeScreen from "../welcome-screen/welcome-screen.jsx";
 const App = (props) => {
   const {gameTime, errorAmount} = props;
 
+  const onGameStartButtonClick = () => {
+  };
+
   return (
     <WelcomeScreen
       time = {gameTime}
       errorAmount = {errorAmount}
+      onWelcomeButtonClick = {onGameStartButtonClick}
     />
   );
 };
