@@ -10,7 +10,7 @@ const App = (props) => {
 
   return (
     <WelcomeScreen
-      time = {gameTime}
+      time={gameTime}
       errorAmount = {errorAmount}
       onWelcomeButtonClick = {onGameStartButtonClick}
     />

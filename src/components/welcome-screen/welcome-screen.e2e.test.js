@@ -9,9 +9,9 @@ it(`check welcome button click`, () => {
   const clickHandler = jest.fn();
   const WelcomeScreenComponent = shallow(
       <WelcomeScreen
-        time = {1}
-        errorAmount = {1}
-        onWelcomeButtonClick = {clickHandler}
+        time={1}
+        errorAmount={1}
+        onWelcomeButtonClick={clickHandler}
       />
   );
 
