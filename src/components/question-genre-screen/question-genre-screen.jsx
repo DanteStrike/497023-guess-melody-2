@@ -1,11 +1,14 @@
 import React from "react";
-import GameHeader from "../game-header/game-header";
+import PropTypes from "prop-types";
+import GameHeader from "../game-header/game-header.jsx";
 
 const QuestionGenreScreen = (props) => {
   const {
-    type,
-    genre,
-    answers,
+    screenIndex,
+    question: {
+      genre,
+      answers,
+    },
     onAnswerClick
   } = props;
 
@@ -18,15 +21,15 @@ const QuestionGenreScreen = (props) => {
         <form className="game__tracks">
 
           {answers.map((answer, index) => (
-            <div className="track">
+            <div className="track" key={`${screenIndex}-answer-${index}`}>
               <button className="track__button track__button--play" type="button"></button>
               <div className="track__status">
-                <audio></audio>
+                <audio src={answer.src}></audio>
               </div>
               <div className="game__answer">
-                <input className="game__input visually-hidden" type="checkbox" name="answer" value="answer-1"
-                  id="answer-1"/>
-                <label className="game__check" htmlFor="answer-1">Отметить</label>
+                <input className="game__input visually-hidden" type="checkbox" name="answer" value={answer.genre}
+                  id={`answer-${index}`}/>
+                <label className="game__check" htmlFor={`answer-${index}`}>Отметить</label>
               </div>
             </div>
           ))}
@@ -36,6 +39,21 @@ const QuestionGenreScreen = (props) => {
       </section>
     </section>
   );
+};
+
+QuestionGenreScreen.propTypes = {
+  screenIndex: PropTypes.number.isRequired,
+  question: PropTypes.exact({
+    type: PropTypes.oneOf([`genre`]),
+    genre: PropTypes.oneOf([`jazz`, `rock`, `pop`]),
+    answers: PropTypes.arrayOf(
+        PropTypes.exact({
+          src: PropTypes.string.isRequired,
+          genre: PropTypes.oneOf([`jazz`, `rock`, `pop`])
+        })
+    )
+  }),
+  onAnswerClick: PropTypes.func.isRequired
 };
 
 export default QuestionGenreScreen;
