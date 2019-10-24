@@ -3,7 +3,7 @@ import renderer from "react-test-renderer";
 import WelcomeScreen from "./welcome-screen.jsx";
 
 it(`render correctly WelcomeScreen component`, () => {
-  const WelcomeScreenComponent = renderer
+  const snapshot = renderer
     .create(
         <WelcomeScreen
           time={1}
@@ -13,5 +13,5 @@ it(`render correctly WelcomeScreen component`, () => {
     )
     .toJSON();
 
-  expect(WelcomeScreenComponent).toMatchSnapshot();
+  expect(snapshot).toMatchSnapshot();
 });
