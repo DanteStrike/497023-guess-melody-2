@@ -1,21 +1,77 @@
 import React from "react";
 import PropTypes from "prop-types";
 import WelcomeScreen from "../welcome-screen/welcome-screen.jsx";
+import QuestionGenreScreen from "../question-genre-screen/question-genre-screen.jsx";
+import QuestionArtistScreen from "../question-artist-screen/question-artist-screen.jsx";
 
-const App = (props) => {
-  const {gameTime, errorAmount, questions} = props;
+class App extends React.Component {
+  static getScreen(questionIndex, props, onUserAnswerClick) {
+    const {gameTime, errorAmount} = props;
+    if (questionIndex === -1) {
+      return (
+        <WelcomeScreen
+          time={gameTime}
+          errorAmount={errorAmount}
+          onWelcomeButtonClick={onUserAnswerClick}
+        />
+      );
+    }
 
-  const startButtonClickHandler = () => {
-  };
+    const {questions} = props;
+    const currentQuestion = questions[questionIndex];
 
-  return (
-    <WelcomeScreen
-      time={gameTime}
-      errorAmount={errorAmount}
-      onWelcomeButtonClick = {startButtonClickHandler}
-    />
-  );
-};
+    switch (currentQuestion.type) {
+      case `genre`:
+        return (
+          <QuestionGenreScreen
+            screenIndex={questionIndex}
+            question={currentQuestion}
+            onAnswerClick={onUserAnswerClick}
+          />
+        );
+
+      case `artist`:
+        return (
+          <QuestionArtistScreen
+            screenIndex={questionIndex}
+            question={currentQuestion}
+            onAnswerClick={onUserAnswerClick}
+          />
+        );
+    }
+
+    return null;
+  }
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      questionIndex: -1
+    };
+
+    this._userAnswerClickHandler = this._userAnswerClickHandler.bind(this);
+  }
+
+  render() {
+    return (
+      App.getScreen(this.state.questionIndex, this.props, this._userAnswerClickHandler)
+    );
+  }
+
+  _userAnswerClickHandler(evt) {
+    // evt.preventDefault();
+
+    this.setState((prevState) => {
+      const nextIndex = prevState.questionIndex + 1;
+      const isEnd = nextIndex >= this.props.questions.length;
+
+      return {
+        questionIndex: !isEnd ? nextIndex : -1
+      };
+    });
+  }
+}
 
 App.propTypes = {
   gameTime: PropTypes.number.isRequired,
