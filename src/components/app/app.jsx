@@ -59,9 +59,7 @@ class App extends React.Component {
     );
   }
 
-  _userAnswerClickHandler(evt) {
-    // evt.preventDefault();
-
+  _userAnswerClickHandler() {
     this.setState((prevState) => {
       const nextIndex = prevState.questionIndex + 1;
       const isEnd = nextIndex >= this.props.questions.length;

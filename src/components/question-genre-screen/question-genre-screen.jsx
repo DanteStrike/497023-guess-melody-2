@@ -12,13 +12,18 @@ const QuestionGenreScreen = (props) => {
     onAnswerClick
   } = props;
 
+  const answerSubmitHandler = (evt) => {
+    evt.preventDefault();
+    onAnswerClick();
+  };
+
   return (
     <section className="game game--genre">
       <GameHeader/>
 
       <section className="game__screen">
         <h2 className="game__title">Выберите {genre} треки</h2>
-        <form className="game__tracks">
+        <form className="game__tracks" onSubmit={answerSubmitHandler}>
 
           {answers.map((answer, index) => (
             <div className="track" key={`${screenIndex}-answer-${index}`}>
@@ -34,7 +39,7 @@ const QuestionGenreScreen = (props) => {
             </div>
           ))}
 
-          <button className="game__submit button" type="submit" onClick={onAnswerClick}>Ответить</button>
+          <button className="game__submit button" type="submit">Ответить</button>
         </form>
       </section>
     </section>

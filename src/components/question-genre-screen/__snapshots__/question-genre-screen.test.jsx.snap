@@ -87,6 +87,7 @@ exports[`render correctly QuestionArtistScreen component 1`] = `
     </h2>
     <form
       className="game__tracks"
+      onSubmit={[Function]}
     >
       <div
         className="track"
@@ -218,7 +219,6 @@ exports[`render correctly QuestionArtistScreen component 1`] = `
       </div>
       <button
         className="game__submit button"
-        onClick={[MockFunction]}
         type="submit"
       >
         Ответить
