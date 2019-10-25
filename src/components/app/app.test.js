@@ -47,7 +47,7 @@ it(`render correctly App component`, () => {
         }
       ]
     }
-  ]
+  ];
 
   const snapshot = renderer
     .create(
