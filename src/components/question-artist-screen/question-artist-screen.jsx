@@ -12,6 +12,12 @@ const QuestionArtistScreen = (props) => {
     onAnswerClick
   } = props;
 
+  const answerSubmitHandler = (evt) => {
+    const answersForm = evt.currentTarget;
+    const userAnswer = new FormData(answersForm).get(`answer`);
+    onAnswerClick(userAnswer);
+  };
+
   return (
     <section className="game game--artist">
       <GameHeader/>
@@ -27,7 +33,7 @@ const QuestionArtistScreen = (props) => {
           </div>
         </div>
 
-        <form className="game__artist" onChange={onAnswerClick}>
+        <form className="game__artist" onChange={answerSubmitHandler}>
 
           {answers.map((answer, index) => (
             <div className="artist" key={`${screenIndex}-answer-${index}`}>
