@@ -14,8 +14,8 @@ const QuestionArtistScreen = (props) => {
 
   const answerSubmitHandler = (evt) => {
     const answersForm = evt.currentTarget;
-    const userAnswer = new FormData(answersForm).get(`answer`);
-    onAnswerClick(userAnswer);
+    const userAnswers = new FormData(answersForm).getAll(`answer`);
+    onAnswerClick(userAnswers);
   };
 
   return (
