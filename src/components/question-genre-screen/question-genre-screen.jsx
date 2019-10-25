@@ -15,7 +15,7 @@ const QuestionGenreScreen = (props) => {
   const answerSubmitHandler = (evt) => {
     evt.preventDefault();
 
-    const answersForm = evt.target;
+    const answersForm = evt.currentTarget;
     const userAnswers = new FormData(answersForm).getAll(`answer`);
     onAnswerClick(userAnswers);
   };
