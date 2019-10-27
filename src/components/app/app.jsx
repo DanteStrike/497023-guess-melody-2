@@ -5,6 +5,33 @@ import QuestionGenreScreen from "../question-genre-screen/question-genre-screen.
 import QuestionArtistScreen from "../question-artist-screen/question-artist-screen.jsx";
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      questionIndex: -1
+    };
+
+    this._userAnswerClickHandler = this._userAnswerClickHandler.bind(this);
+  }
+
+  _userAnswerClickHandler() {
+    this.setState((prevState) => {
+      const nextIndex = prevState.questionIndex + 1;
+      const isEnd = nextIndex >= this.props.questions.length;
+
+      return {
+        questionIndex: !isEnd ? nextIndex : -1
+      };
+    });
+  }
+
+  render() {
+    return (
+      App.getScreen(this.state.questionIndex, this.props, this._userAnswerClickHandler)
+    );
+  }
+
   static getScreen(questionIndex, props, onUserAnswerClick) {
     const {gameTime, errorAmount} = props;
     if (questionIndex === -1) {
@@ -41,33 +68,6 @@ class App extends React.Component {
     }
 
     return null;
-  }
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      questionIndex: -1
-    };
-
-    this._userAnswerClickHandler = this._userAnswerClickHandler.bind(this);
-  }
-
-  render() {
-    return (
-      App.getScreen(this.state.questionIndex, this.props, this._userAnswerClickHandler)
-    );
-  }
-
-  _userAnswerClickHandler() {
-    this.setState((prevState) => {
-      const nextIndex = prevState.questionIndex + 1;
-      const isEnd = nextIndex >= this.props.questions.length;
-
-      return {
-        questionIndex: !isEnd ? nextIndex : -1
-      };
-    });
   }
 }
 
