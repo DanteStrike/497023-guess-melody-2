@@ -1,5 +1,11 @@
 import React from "react";
 
+const gameHeaderStyle = {
+  filter: `url(#blur)`,
+  transform: `rotate(-90deg) scaleY(-1)`,
+  transformOrigin: `center`
+};
+
 const GameHeader = () => {
   return (
     <header className="game__header">
@@ -10,7 +16,7 @@ const GameHeader = () => {
 
       <svg xmlns="http://www.w3.org/2000/svg" className="timer" viewBox="0 0 780 780">
         <circle className="timer__line" cx="390" cy="390" r="370"
-          style={{filter: `url(#blur)`, transform: `rotate(-90deg) scaleY(-1)`, transformOrigin: `center`}}/>
+          style={gameHeaderStyle}/>
       </svg>
 
       <div className="timer__value" xmlns="http://www.w3.org/1999/xhtml">
