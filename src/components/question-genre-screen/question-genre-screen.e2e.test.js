@@ -18,37 +18,6 @@ it(`Should preventDefault on form submit`, () => {
   };
 
   const preventDefault = jest.fn();
-
-  const component = shallow(
-      <QuestionGenreScreen
-        screenIndex={0}
-        question={questionMock}
-        onAnswerClick={jest.fn()}
-      />
-  );
-
-  const componentForm = component.find(`form.game__tracks`);
-  componentForm.simulate(`submit`, {preventDefault});
-
-  expect(preventDefault).toBeCalled();
-});
-
-it(`Should return user answers correctly on submit form`, () => {
-  const questionMock = {
-    type: `genre`,
-    genre: `jazz`,
-    answers: [
-      {
-        src: ``,
-        genre: `jazz`
-      },
-      {
-        src: ``,
-        genre: `pop`
-      }
-    ]
-  };
-
   const onAnswerClickMock = jest.fn();
 
   const component = shallow(
@@ -59,9 +28,9 @@ it(`Should return user answers correctly on submit form`, () => {
       />
   );
 
-  const preventDefault = () => {};
+  const componentForm = component.find(`form.game__tracks`);
+  componentForm.simulate(`submit`, {preventDefault});
 
-  const genreQuestionForm = component.find(`form.game__tracks`);
-  genreQuestionForm.simulate(`submit`, {preventDefault});
+  expect(preventDefault).toBeCalled();
   expect(onAnswerClickMock.mock.calls[0][0]).toMatchObject([]);
 });
