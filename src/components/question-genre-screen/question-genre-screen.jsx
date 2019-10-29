@@ -2,52 +2,84 @@ import React from "react";
 import PropTypes from "prop-types";
 import GameHeader from "../game-header/game-header.jsx";
 
-const QuestionGenreScreen = (props) => {
-  const {
-    question: {
-      id,
-      genre,
-      answers,
-    },
-    onAnswerClick
-  } = props;
+class QuestionGenreScreen extends React.PureComponent {
+  constructor(props) {
+    super(props);
 
-  const answerSubmitHandler = (evt) => {
+    this.state = {
+      checkboxes: this.props.question.answers
+        .reduce((checkboxes) => {
+          checkboxes.push({
+            isSelected: false
+          });
+          return checkboxes;
+        }, [])
+    };
+  }
+
+  _answerChangeHandler(checkboxIndex) {
+    this.setState((prevState) => {
+      const newCheckboxes = prevState.checkboxes.map((checkbox) => ({isSelected: checkbox.isSelected}));
+      newCheckboxes[checkboxIndex].isSelected = !newCheckboxes[checkboxIndex].isSelected;
+      return {
+        checkboxes: newCheckboxes
+      };
+    });
+  }
+
+  _answersSubmitHandler(evt) {
     evt.preventDefault();
 
-    const answersForm = evt.currentTarget;
-    const userAnswers = new FormData(answersForm).getAll(`answer`);
-    onAnswerClick(userAnswers);
-  };
+    const answers = this.props.question.answers;
+    const userAnswers = this.state.checkboxes
+      .reduce((result, checkbox, checkboxIndex) => {
+        if (checkbox.isSelected) {
+          result.push(answers[checkboxIndex].genre);
+        }
+        return result;
+      }, []);
+    this.props.onAnswerClick(userAnswers);
+  }
 
-  return (
-    <section className="game game--genre">
-      <GameHeader/>
+  render() {
+    const {
+      question: {
+        id,
+        genre,
+        answers,
+      }
+    } = this.props;
 
-      <section className="game__screen">
-        <h2 className="game__title">Выберите {genre} треки</h2>
-        <form className="game__tracks" onSubmit={answerSubmitHandler}>
+    return (
+      <section className="game game--genre">
+        <GameHeader/>
 
-          {answers.map((answer, index) => (
-            <div className="track" key={`${id}-${index}-answer`}>
-              <button className="track__button track__button--play" type="button"></button>
-              <div className="track__status">
-                <audio src={answer.src}></audio>
+        <section className="game__screen">
+          <h2 className="game__title">Выберите {genre} треки</h2>
+          <form className="game__tracks" onSubmit={(evt) => this._answersSubmitHandler(evt)}>
+
+            {answers.map((answer, index) => (
+              <div className="track" key={`${id}-${index}-answer`}>
+                <button className="track__button track__button--play" type="button"></button>
+                <div className="track__status">
+                  <audio src={answer.src}></audio>
+                </div>
+                <div className="game__answer">
+                  <input className="game__input visually-hidden" type="checkbox" name="answer"
+                    value={answer.genre} id={`answer-${index}`}
+                    onChange={() => this._answerChangeHandler(index)} checked={this.state.checkboxes[index].isSelected}/>
+                  <label className="game__check" htmlFor={`answer-${index}`}>Отметить</label>
+                </div>
               </div>
-              <div className="game__answer">
-                <input className="game__input visually-hidden" type="checkbox" name="answer" value={answer.genre}
-                  id={`answer-${index}`}/>
-                <label className="game__check" htmlFor={`answer-${index}`}>Отметить</label>
-              </div>
-            </div>
-          ))}
+            ))}
 
-          <button className="game__submit button" type="submit">Ответить</button>
-        </form>
+            <button className="game__submit button" type="submit">Ответить</button>
+          </form>
+        </section>
       </section>
-    </section>
-  );
-};
+    );
+  }
+}
 
 QuestionGenreScreen.propTypes = {
   question: PropTypes.exact({
