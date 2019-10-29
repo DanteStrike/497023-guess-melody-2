@@ -11,8 +11,6 @@ class App extends React.Component {
     this.state = {
       questionIndex: -1
     };
-
-    this._userAnswerClickHandler = this._userAnswerClickHandler.bind(this);
   }
 
   _userAnswerClickHandler() {
@@ -28,7 +26,7 @@ class App extends React.Component {
 
   render() {
     return (
-      App.getScreen(this.state.questionIndex, this.props, this._userAnswerClickHandler)
+      App.getScreen(this.state.questionIndex, this.props, () => this._userAnswerClickHandler())
     );
   }
 
