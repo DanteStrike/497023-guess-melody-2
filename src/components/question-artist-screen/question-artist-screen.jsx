@@ -2,54 +2,67 @@ import React from "react";
 import PropTypes from "prop-types";
 import GameHeader from "../game-header/game-header.jsx";
 
-const QuestionArtistScreen = (props) => {
-  const {
-    question: {
-      id,
-      song,
-      answers,
-    },
-    onAnswerClick
-  } = props;
+class QuestionArtistScreen extends React.PureComponent {
+  constructor(props) {
+    super(props);
 
-  const answerSubmitHandler = (evt) => {
-    const answersForm = evt.currentTarget;
-    const userAnswers = new FormData(answersForm).getAll(`answer`);
-    onAnswerClick(userAnswers);
-  };
+    this.state = {
+      currentAnswer: []
+    };
+  }
 
-  return (
-    <section className="game game--artist">
-      <GameHeader/>
+  _answerChangeHandler(evt) {
+    this.setState({
+      currentAnswer: [evt.target.value]
+    });
+  }
 
-      <section className="game__screen">
-        <h2 className="game__title">Кто исполняет эту песню?</h2>
-        <div className="game__track">
-          <div className="track">
-            <button className="track__button track__button--play" type="button"></button>
-            <div className="track__status">
-              <audio src={song.src}></audio>
+  _answersChangeHandler() {
+    this.props.onAnswerClick(this.state.currentAnswer);
+  }
+
+  render() {
+    const {
+      question: {
+        id,
+        song,
+        answers,
+      }
+    } = this.props;
+    return (
+      <section className="game game--artist">
+        <GameHeader/>
+
+        <section className="game__screen">
+          <h2 className="game__title">Кто исполняет эту песню?</h2>
+          <div className="game__track">
+            <div className="track">
+              <button className="track__button track__button--play" type="button"></button>
+              <div className="track__status">
+                <audio src={song.src}></audio>
+              </div>
             </div>
           </div>
-        </div>
 
-        <form className="game__artist" onChange={answerSubmitHandler}>
+          <form className="game__artist" onChange={() => this._answersChangeHandler()}>
 
-          {answers.map((answer, index) => (
-            <div className="artist" key={`${id}-${index}-answer`}>
-              <input className="artist__input visually-hidden" type="radio" name="answer" value={answer.artist} id={`answer-${index}`}/>
-              <label className="artist__name" htmlFor={`answer-${index}`}>
-                <img className="artist__picture" src={answer.image} alt={answer.artist}/>
-                {answer.artist}
-              </label>
-            </div>
-          ))}
+            {answers.map((answer, index) => (
+              <div className="artist" key={`${id}-${index}-answer`}>
+                <input onChange={(evt) => this._answerChangeHandler(evt)} className="artist__input visually-hidden" type="radio" name="answer" value={answer.artist}
+                  id={`answer-${index}`}/>
+                <label className="artist__name" htmlFor={`answer-${index}`}>
+                  <img className="artist__picture" src={answer.image} alt={answer.artist}/>
+                  {answer.artist}
+                </label>
+              </div>
+            ))}
 
-        </form>
+          </form>
+        </section>
       </section>
-    </section>
-  );
-};
+    );
+  }
+}
 
 QuestionArtistScreen.propTypes = {
   question: PropTypes.exact({
