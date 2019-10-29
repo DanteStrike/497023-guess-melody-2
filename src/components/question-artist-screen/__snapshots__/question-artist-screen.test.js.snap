@@ -113,6 +113,7 @@ exports[`render correctly QuestionArtistScreen component 1`] = `
           className="artist__input visually-hidden"
           id="answer-0"
           name="answer"
+          onChange={[Function]}
           type="radio"
           value="Jose Carreras"
         />
@@ -135,6 +136,7 @@ exports[`render correctly QuestionArtistScreen component 1`] = `
           className="artist__input visually-hidden"
           id="answer-1"
           name="answer"
+          onChange={[Function]}
           type="radio"
           value="Luciano Pavarotti"
         />
@@ -157,6 +159,7 @@ exports[`render correctly QuestionArtistScreen component 1`] = `
           className="artist__input visually-hidden"
           id="answer-2"
           name="answer"
+          onChange={[Function]}
           type="radio"
           value="Plаcido Domingo"
         />
