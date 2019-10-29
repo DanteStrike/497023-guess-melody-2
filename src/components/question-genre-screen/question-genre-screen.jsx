@@ -4,8 +4,8 @@ import GameHeader from "../game-header/game-header.jsx";
 
 const QuestionGenreScreen = (props) => {
   const {
-    screenIndex,
     question: {
+      id,
       genre,
       answers,
     },
@@ -29,7 +29,7 @@ const QuestionGenreScreen = (props) => {
         <form className="game__tracks" onSubmit={answerSubmitHandler}>
 
           {answers.map((answer, index) => (
-            <div className="track" key={`${screenIndex}-answer-${index}`}>
+            <div className="track" key={`${id}-${index}-answer`}>
               <button className="track__button track__button--play" type="button"></button>
               <div className="track__status">
                 <audio src={answer.src}></audio>
@@ -50,8 +50,8 @@ const QuestionGenreScreen = (props) => {
 };
 
 QuestionGenreScreen.propTypes = {
-  screenIndex: PropTypes.number.isRequired,
   question: PropTypes.exact({
+    id: PropTypes.number.isRequired,
     type: PropTypes.oneOf([`genre`]),
     genre: PropTypes.oneOf([`jazz`, `rock`, `pop`]),
     answers: PropTypes.arrayOf(

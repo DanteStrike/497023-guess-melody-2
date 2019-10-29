@@ -4,6 +4,7 @@ import QuestionArtistScreen from "./question-artist-screen.jsx";
 
 it(`render correctly QuestionArtistScreen component`, () => {
   const questionMock = {
+    id: 1,
     type: `artist`,
     song: {
       artist: `Plаcido Domingo`,

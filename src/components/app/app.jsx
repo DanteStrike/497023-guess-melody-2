@@ -51,7 +51,6 @@ class App extends React.Component {
       case `genre`:
         return (
           <QuestionGenreScreen
-            screenIndex={questionIndex}
             question={currentQuestion}
             onAnswerClick={onUserAnswerClick}
           />
@@ -60,7 +59,6 @@ class App extends React.Component {
       case `artist`:
         return (
           <QuestionArtistScreen
-            screenIndex={questionIndex}
             question={currentQuestion}
             onAnswerClick={onUserAnswerClick}
           />
@@ -76,6 +74,7 @@ App.propTypes = {
   errorAmount: PropTypes.number.isRequired,
   questions: PropTypes.arrayOf(PropTypes.oneOfType([
     PropTypes.exact({
+      id: PropTypes.number.isRequired,
       type: PropTypes.oneOf([`genre`]),
       genre: PropTypes.oneOf([`jazz`, `rock`, `pop`]),
       answers: PropTypes.arrayOf(
@@ -86,6 +85,7 @@ App.propTypes = {
       )
     }),
     PropTypes.exact({
+      id: PropTypes.number.isRequired,
       type: PropTypes.oneOf([`artist`]),
       song: PropTypes.exact({
         artist: PropTypes.string.isRequired,

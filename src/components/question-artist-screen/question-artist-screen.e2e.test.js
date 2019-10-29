@@ -7,6 +7,7 @@ Enzyme.configure({adapter: new Adapter()});
 
 it(`Should return user answers correctly on submit form`, () => {
   const questionMock = {
+    id: 1,
     song: {
       artist: `Plаcido Domingo`,
       src: ``

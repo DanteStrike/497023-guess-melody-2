@@ -1,5 +1,6 @@
 export const questions = [
   {
+    id: 1,
     type: `genre`,
     genre: `jazz`,
     answers: [
@@ -22,6 +23,7 @@ export const questions = [
     ]
   },
   {
+    id: 2,
     type: `artist`,
     song: {
       artist: `Plаcido Domingo`,
@@ -43,6 +45,7 @@ export const questions = [
     ]
   },
   {
+    id: 3,
     type: `genre`,
     genre: `pop`,
     answers: [
@@ -65,6 +68,7 @@ export const questions = [
     ]
   },
   {
+    id: 4,
     type: `artist`,
     song: {
       artist: `Jose Carreras`,

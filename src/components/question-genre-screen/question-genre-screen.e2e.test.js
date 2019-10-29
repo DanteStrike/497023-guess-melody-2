@@ -7,6 +7,7 @@ Enzyme.configure({adapter: new Adapter()});
 
 it(`Should preventDefault on form submit`, () => {
   const questionMock = {
+    id: 1,
     type: `genre`,
     genre: `jazz`,
     answers: [

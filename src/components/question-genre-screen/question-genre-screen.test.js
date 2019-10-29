@@ -4,6 +4,7 @@ import QuestionGenreScreen from "./question-genre-screen.jsx";
 
 it(`render correctly QuestionArtistScreen component`, () => {
   const questionMock = {
+    id: 1,
     type: `genre`,
     genre: `jazz`,
     answers: [
@@ -29,7 +30,6 @@ it(`render correctly QuestionArtistScreen component`, () => {
   const snapshot = renderer
     .create(
         <QuestionGenreScreen
-          screenIndex={1}
           question={questionMock}
           onAnswerClick={jest.fn()}
         />

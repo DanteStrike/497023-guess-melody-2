@@ -4,8 +4,8 @@ import GameHeader from "../game-header/game-header.jsx";
 
 const QuestionArtistScreen = (props) => {
   const {
-    screenIndex,
     question: {
+      id,
       song,
       answers,
     },
@@ -36,7 +36,7 @@ const QuestionArtistScreen = (props) => {
         <form className="game__artist" onChange={answerSubmitHandler}>
 
           {answers.map((answer, index) => (
-            <div className="artist" key={`${screenIndex}-answer-${index}`}>
+            <div className="artist" key={`${id}-${index}-answer`}>
               <input className="artist__input visually-hidden" type="radio" name="answer" value={answer.artist} id={`answer-${index}`}/>
               <label className="artist__name" htmlFor={`answer-${index}`}>
                 <img className="artist__picture" src={answer.image} alt={answer.artist}/>
@@ -45,7 +45,6 @@ const QuestionArtistScreen = (props) => {
             </div>
           ))}
 
-
         </form>
       </section>
     </section>
@@ -53,8 +52,8 @@ const QuestionArtistScreen = (props) => {
 };
 
 QuestionArtistScreen.propTypes = {
-  screenIndex: PropTypes.number.isRequired,
   question: PropTypes.exact({
+    id: PropTypes.number.isRequired,
     type: PropTypes.oneOf([`artist`]),
     song: PropTypes.exact({
       artist: PropTypes.string.isRequired,

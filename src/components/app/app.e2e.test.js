@@ -10,6 +10,7 @@ describe(`APP screens should switch`, () => {
   it(`On start game button click: welcome screen should switch to first question`, () => {
     const questionsMock = [
       {
+        id: 1,
         type: `genre`,
         genre: `jazz`,
         answers: [
@@ -45,6 +46,7 @@ describe(`APP screens should switch`, () => {
   it(`Should switch questions screens`, () => {
     const questionsMock = [
       {
+        id: 1,
         type: `genre`,
         genre: `jazz`,
         answers: [
@@ -55,6 +57,7 @@ describe(`APP screens should switch`, () => {
         ]
       },
       {
+        id: 1,
         type: `artist`,
         song: {
           artist: `Plаcido Domingo`,
@@ -94,6 +97,7 @@ describe(`APP screens should switch`, () => {
   it(`Should return to welcome screen after game end`, () => {
     const questionsMock = [
       {
+        id: 1,
         type: `artist`,
         song: {
           artist: `Plаcido Domingo`,
