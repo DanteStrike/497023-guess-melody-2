@@ -2,11 +2,11 @@ export const questions = [
   {
     id: 1,
     type: `genre`,
-    genre: `jazz`,
+    genre: `rock`,
     answers: [
       {
         src: `https://upload.wikimedia.org/wikipedia/commons/d/de/United_States_Navy_Band_-_God_Save_the_Queen.ogg`,
-        genre: `jazz`
+        genre: `rock`
       },
       {
         src: `https://upload.wikimedia.org/wikipedia/commons/d/de/United_States_Navy_Band_-_God_Save_the_Queen.ogg`,
@@ -71,20 +71,20 @@ export const questions = [
     id: 4,
     type: `artist`,
     song: {
-      artist: `Jose Carreras`,
+      artist: `Luciano Pavarotti`,
       src: `https://upload.wikimedia.org/wikipedia/commons/d/de/United_States_Navy_Band_-_God_Save_the_Queen.ogg`
     },
     answers: [
-      {
-        artist: `Luciano Pavarotti`,
-        image: `http://placehold.it/134x134`
-      },
       {
         artist: `Plаcido Domingo`,
         image: `http://placehold.it/134x134`
       },
       {
         artist: `Jose Carreras`,
+        image: `http://placehold.it/134x134`
+      },
+      {
+        artist: `Luciano Pavarotti`,
         image: `http://placehold.it/134x134`
       }
     ]
