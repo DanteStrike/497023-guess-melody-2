@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`render correctly QuestionArtistScreen component 1`] = `
+exports[`render correctly QuestionGenreScreen component 1`] = `
 <section
   className="game game--genre"
 >
@@ -94,14 +94,14 @@ exports[`render correctly QuestionArtistScreen component 1`] = `
       >
         <button
           className="track__button track__button--play"
+          disabled={true}
+          onClick={[Function]}
           type="button"
         />
         <div
           className="track__status"
         >
-          <audio
-            src=""
-          />
+          <audio />
         </div>
         <div
           className="game__answer"
@@ -128,14 +128,14 @@ exports[`render correctly QuestionArtistScreen component 1`] = `
       >
         <button
           className="track__button track__button--play"
+          disabled={true}
+          onClick={[Function]}
           type="button"
         />
         <div
           className="track__status"
         >
-          <audio
-            src=""
-          />
+          <audio />
         </div>
         <div
           className="game__answer"
@@ -162,14 +162,14 @@ exports[`render correctly QuestionArtistScreen component 1`] = `
       >
         <button
           className="track__button track__button--play"
+          disabled={true}
+          onClick={[Function]}
           type="button"
         />
         <div
           className="track__status"
         >
-          <audio
-            src=""
-          />
+          <audio />
         </div>
         <div
           className="game__answer"
@@ -196,14 +196,14 @@ exports[`render correctly QuestionArtistScreen component 1`] = `
       >
         <button
           className="track__button track__button--play"
+          disabled={true}
+          onClick={[Function]}
           type="button"
         />
         <div
           className="track__status"
         >
-          <audio
-            src=""
-          />
+          <audio />
         </div>
         <div
           className="game__answer"
