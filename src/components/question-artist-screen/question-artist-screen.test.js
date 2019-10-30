@@ -32,7 +32,17 @@ it(`render correctly QuestionArtistScreen component`, () => {
           screenIndex={1}
           question={questionMock}
           onAnswerClick={jest.fn()}
-        />
+        />,
+        {
+          createNodeMock: (element) => {
+            if (element.type === `audio`) {
+              return {
+                src: null
+              };
+            }
+            return null;
+          }
+        }
     )
     .toJSON();
 
