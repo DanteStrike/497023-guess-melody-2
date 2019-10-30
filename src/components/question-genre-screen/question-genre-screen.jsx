@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import GameHeader from "../game-header/game-header.jsx";
+import AudioPlayer from "../audio-player/audio-player.jsx";
 
 class QuestionGenreScreen extends React.PureComponent {
   constructor(props) {
@@ -14,10 +15,13 @@ class QuestionGenreScreen extends React.PureComponent {
           });
           return checkboxes;
         }, [])
+      audioPlayerID: -1,
     };
   }
 
-  _answerChangeHandler(checkboxIndex) {
+  _playButtonClickHandler(audioPlayerID) {
+    this.setState({audioPlayerID});
+  }
     this.setState((prevState) => {
       const newCheckboxes = prevState.checkboxes.map((checkbox) => ({isSelected: checkbox.isSelected}));
       newCheckboxes[checkboxIndex].isSelected = !newCheckboxes[checkboxIndex].isSelected;
@@ -44,7 +48,7 @@ class QuestionGenreScreen extends React.PureComponent {
   render() {
     const {
       question: {
-        id,
+        id: quesID,
         genre,
         answers,
       }
@@ -59,11 +63,12 @@ class QuestionGenreScreen extends React.PureComponent {
           <form className="game__tracks" onSubmit={(evt) => this._answersSubmitHandler(evt)}>
 
             {answers.map((answer, index) => (
-              <div className="track" key={`${id}-${index}-answer`}>
-                <button className="track__button track__button--play" type="button"></button>
-                <div className="track__status">
-                  <audio src={answer.src}></audio>
-                </div>
+              <div className="track" key={`${quesID}-${index}-answer`}>
+                <AudioPlayer
+                  isPlaying={index === this.state.audioPlayerID ? true : false}
+                  src={answer.src}
+                  onPlayButtonClick={() => this._playButtonClickHandler(index)}
+                />
                 <div className="game__answer">
                   <input className="game__input visually-hidden" type="checkbox" name="answer"
                     value={answer.genre} id={`answer-${index}`}
