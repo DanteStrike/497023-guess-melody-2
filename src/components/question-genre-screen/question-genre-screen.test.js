@@ -2,7 +2,7 @@ import React from "react";
 import renderer from "react-test-renderer";
 import QuestionGenreScreen from "./question-genre-screen.jsx";
 
-it(`render correctly QuestionArtistScreen component`, () => {
+it(`render correctly QuestionGenreScreen component`, () => {
   const questionMock = {
     id: 1,
     type: `genre`,
@@ -32,7 +32,17 @@ it(`render correctly QuestionArtistScreen component`, () => {
         <QuestionGenreScreen
           question={questionMock}
           onAnswerClick={jest.fn()}
-        />
+        />,
+        {
+          createNodeMock: (element) => {
+            if (element.type === `audio`) {
+              return {
+                src: null
+              };
+            }
+            return null;
+          }
+        }
     )
     .toJSON();
 

@@ -2,31 +2,41 @@ import React from "react";
 import PropTypes from "prop-types";
 import GameHeader from "../game-header/game-header.jsx";
 import AudioPlayer from "../audio-player/audio-player.jsx";
+import AnswerCheckbox from "../answer-checkbox/answer-checkbox.jsx";
 
 class QuestionGenreScreen extends React.PureComponent {
   constructor(props) {
     super(props);
 
     this.state = {
-      checkboxes: this.props.question.answers
-        .reduce((checkboxes) => {
-          checkboxes.push({
-            isSelected: false
-          });
-          return checkboxes;
-        }, [])
       audioPlayerID: -1,
+      userSelections: []
     };
   }
 
   _playButtonClickHandler(audioPlayerID) {
     this.setState({audioPlayerID});
   }
+
+  _answerChangeHandler(checkboxID, checkboxValue) {
     this.setState((prevState) => {
-      const newCheckboxes = prevState.checkboxes.map((checkbox) => ({isSelected: checkbox.isSelected}));
-      newCheckboxes[checkboxIndex].isSelected = !newCheckboxes[checkboxIndex].isSelected;
+      const newUserSelections = prevState.userSelections.map((userChoice) => ({
+        id: userChoice.id,
+        value: userChoice.value
+      }));
+      const foundedIndex = newUserSelections.findIndex((userChoice) => userChoice.id === checkboxID);
+
+      if (foundedIndex === -1) {
+        newUserSelections.push({
+          id: checkboxID,
+          value: checkboxValue
+        });
+      } else {
+        newUserSelections.splice(foundedIndex, 1);
+      }
+
       return {
-        checkboxes: newCheckboxes
+        userSelections: newUserSelections
       };
     });
   }
@@ -34,15 +44,19 @@ class QuestionGenreScreen extends React.PureComponent {
   _answersSubmitHandler(evt) {
     evt.preventDefault();
 
-    const answers = this.props.question.answers;
-    const userAnswers = this.state.checkboxes
-      .reduce((result, checkbox, checkboxIndex) => {
-        if (checkbox.isSelected) {
-          result.push(answers[checkboxIndex].genre);
-        }
+    const userAnswers = this.state.userSelections
+      .sort((a, b) => a.id - b.id)
+      .reduce((result, userChoice) => {
+        result.push(userChoice.value);
         return result;
       }, []);
+
     this.props.onAnswerClick(userAnswers);
+
+    this.setState({
+      audioPlayerID: -1,
+      userSelections: []
+    });
   }
 
   render() {
@@ -70,10 +84,12 @@ class QuestionGenreScreen extends React.PureComponent {
                   onPlayButtonClick={() => this._playButtonClickHandler(index)}
                 />
                 <div className="game__answer">
-                  <input className="game__input visually-hidden" type="checkbox" name="answer"
-                    value={answer.genre} id={`answer-${index}`}
-                    onChange={() => this._answerChangeHandler(index)} checked={this.state.checkboxes[index].isSelected}/>
-                  <label className="game__check" htmlFor={`answer-${index}`}>Отметить</label>
+                  <AnswerCheckbox
+                    id={index}
+                    value={answer.genre}
+                    checked={false}
+                    onChange={() => this._answerChangeHandler(index, answer.genre)}
+                  />
                 </div>
               </div>
             ))}

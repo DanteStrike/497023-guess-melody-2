@@ -1,5 +1,5 @@
 import React from "react";
-import Enzyme, {shallow} from "enzyme";
+import Enzyme, {shallow, mount} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import QuestionGenreScreen from "./question-genre-screen.jsx";
 
@@ -7,6 +7,7 @@ Enzyme.configure({adapter: new Adapter()});
 
 window.HTMLMediaElement.prototype.play = () => { /* do nothing */ };
 window.HTMLMediaElement.prototype.pause = () => { /* do nothing */ };
+
 it(`Should preventDefault on form submit`, () => {
   const questionMock = {
     id: 1,
@@ -56,17 +57,14 @@ it(`Should return user answers correctly on submit form`, () => {
 
   const onAnswerClickMock = jest.fn();
 
-  const component = shallow(
+  const component = mount(
       <QuestionGenreScreen
         question={questionMock}
         onAnswerClick={onAnswerClickMock}
       />
   );
 
-  expect(component.state(`checkboxes`)).toMatchObject([
-    {isSelected: false},
-    {isSelected: false},
-  ]);
+  expect(component.state(`userSelections`)).toMatchObject([]);
 
   const genreQuestionForm = component.find(`form.game__tracks`);
   genreQuestionForm.simulate(`submit`, {preventDefault: () => {}});
@@ -74,13 +72,17 @@ it(`Should return user answers correctly on submit form`, () => {
 
   const answerOneInput = component.find(`#answer-0`);
   const answerTwoInput = component.find(`#answer-1`);
-  answerOneInput.simulate(`change`);
   answerTwoInput.simulate(`change`);
+  answerOneInput.simulate(`change`);
 
-  expect(component.state(`checkboxes`)).toMatchObject([
-    {isSelected: true},
-    {isSelected: true},
-  ]);
+  expect(component.state(`userSelections`)).toMatchObject([{
+    id: 1,
+    value: `pop`
+  }, {
+    id: 0,
+    value: `jazz`
+  }]);
+
   genreQuestionForm.simulate(`submit`, {preventDefault: () => {}});
   expect(onAnswerClickMock.mock.calls[1][0]).toMatchObject([`jazz`, `pop`]);
 });

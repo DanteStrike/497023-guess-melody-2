@@ -1,7 +1,7 @@
 import React, {Fragment} from "react";
 import PropTypes from "prop-types";
 
-class AnswerCheckBox extends React.PureComponent {
+class AnswerCheckbox extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -36,15 +36,15 @@ class AnswerCheckBox extends React.PureComponent {
 
 }
 
-AnswerCheckBox.propTypes = {
+AnswerCheckbox.propTypes = {
   id: PropTypes.number.isRequired,
   value: PropTypes.string.isRequired,
   checked: PropTypes.bool.isRequired,
   onChange: PropTypes.func.isRequired
 };
 
-AnswerCheckBox.defaultProps = {
+AnswerCheckbox.defaultProps = {
   checked: false
 };
 
-export default AnswerCheckBox;
+export default AnswerCheckbox;
