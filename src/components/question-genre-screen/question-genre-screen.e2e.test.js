@@ -5,6 +5,8 @@ import QuestionGenreScreen from "./question-genre-screen.jsx";
 
 Enzyme.configure({adapter: new Adapter()});
 
+window.HTMLMediaElement.prototype.play = () => { /* do nothing */ };
+window.HTMLMediaElement.prototype.pause = () => { /* do nothing */ };
 it(`Should preventDefault on form submit`, () => {
   const questionMock = {
     id: 1,
