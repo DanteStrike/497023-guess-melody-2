@@ -15,7 +15,9 @@ class QuestionGenreScreen extends React.PureComponent {
   }
 
   _playButtonClickHandler(audioPlayerID) {
-    this.setState({audioPlayerID});
+    this.setState((prevState) => ({
+      audioPlayerID: prevState.audioPlayerID === audioPlayerID ? -1 : audioPlayerID
+    }));
   }
 
   _answerChangeHandler(checkboxID, checkboxValue) {
