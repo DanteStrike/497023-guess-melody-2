@@ -24,6 +24,29 @@ export const questions = [
   },
   {
     id: 2,
+    type: `genre`,
+    genre: `jazz`,
+    answers: [
+      {
+        src: `https://upload.wikimedia.org/wikipedia/commons/d/de/United_States_Navy_Band_-_God_Save_the_Queen.ogg`,
+        genre: `jazz`
+      },
+      {
+        src: `https://upload.wikimedia.org/wikipedia/commons/d/de/United_States_Navy_Band_-_God_Save_the_Queen.ogg`,
+        genre: `jazz`
+      },
+      {
+        src: `https://upload.wikimedia.org/wikipedia/commons/d/de/United_States_Navy_Band_-_God_Save_the_Queen.ogg`,
+        genre: `rock`
+      },
+      {
+        src: `https://upload.wikimedia.org/wikipedia/commons/d/de/United_States_Navy_Band_-_God_Save_the_Queen.ogg`,
+        genre: `rock`
+      }
+    ]
+  },
+  {
+    id: 3,
     type: `artist`,
     song: {
       artist: `Plаcido Domingo`,
@@ -45,7 +68,7 @@ export const questions = [
     ]
   },
   {
-    id: 3,
+    id: 4,
     type: `genre`,
     genre: `pop`,
     answers: [
@@ -68,7 +91,7 @@ export const questions = [
     ]
   },
   {
-    id: 4,
+    id: 5,
     type: `artist`,
     song: {
       artist: `Jose Carreras`,
