@@ -1,14 +1,22 @@
 import React from "react";
 import PropTypes from "prop-types";
 import GameHeader from "../game-header/game-header.jsx";
+import AudioPlayer from "../audio-player/audio-player.jsx";
 
 class QuestionArtistScreen extends React.PureComponent {
   constructor(props) {
     super(props);
 
     this.state = {
+      audioPlayerID: -1,
       currentAnswer: []
     };
+  }
+
+  _playButtonClickHandler(audioPlayerID) {
+    this.setState((prevState) => ({
+      audioPlayerID: prevState.audioPlayerID === audioPlayerID ? -1 : audioPlayerID
+    }));
   }
 
   _answerChangeHandler(userChoice) {
@@ -20,6 +28,7 @@ class QuestionArtistScreen extends React.PureComponent {
   _answersChangeHandler() {
     this.props.onAnswerClick(this.state.currentAnswer);
     this.setState({
+      audioPlayerID: -1,
       currentAnswer: []
     });
   }
@@ -32,6 +41,9 @@ class QuestionArtistScreen extends React.PureComponent {
         answers,
       }
     } = this.props;
+
+    const audioPlayerID = 0;
+
     return (
       <section className="game game--artist">
         <GameHeader/>
@@ -40,10 +52,11 @@ class QuestionArtistScreen extends React.PureComponent {
           <h2 className="game__title">Кто исполняет эту песню?</h2>
           <div className="game__track">
             <div className="track">
-              <button className="track__button track__button--play" type="button"></button>
-              <div className="track__status">
-                <audio src={song.src}></audio>
-              </div>
+              <AudioPlayer
+                isPlaying={audioPlayerID === this.state.audioPlayerID ? true : false}
+                src={song.src}
+                onPlayButtonClick={() => this._playButtonClickHandler(audioPlayerID)}
+              />
             </div>
           </div>
 
