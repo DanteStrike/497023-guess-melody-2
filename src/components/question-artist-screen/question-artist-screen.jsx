@@ -11,14 +11,17 @@ class QuestionArtistScreen extends React.PureComponent {
     };
   }
 
-  _answerChangeHandler(evt) {
+  _answerChangeHandler(userChoice) {
     this.setState({
-      currentAnswer: [evt.target.value]
+      currentAnswer: [userChoice]
     });
   }
 
   _answersChangeHandler() {
     this.props.onAnswerClick(this.state.currentAnswer);
+    this.setState({
+      currentAnswer: []
+    });
   }
 
   render() {
@@ -48,7 +51,7 @@ class QuestionArtistScreen extends React.PureComponent {
 
             {answers.map((answer, index) => (
               <div className="artist" key={`${id}-${index}-answer`}>
-                <input onChange={(evt) => this._answerChangeHandler(evt)} className="artist__input visually-hidden" type="radio" name="answer" value={answer.artist}
+                <input onChange={() => this._answerChangeHandler(answer.artist)} className="artist__input visually-hidden" type="radio" name="answer" value={answer.artist}
                   id={`answer-${index}`}/>
                 <label className="artist__name" htmlFor={`answer-${index}`}>
                   <img className="artist__picture" src={answer.image} alt={answer.artist}/>
