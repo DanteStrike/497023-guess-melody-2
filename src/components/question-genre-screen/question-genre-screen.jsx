@@ -46,7 +46,7 @@ class QuestionGenreScreen extends React.PureComponent {
   _answersSubmitHandler(evt) {
     evt.preventDefault();
 
-    const userAnswers = this.state.userSelections
+    const userAnswers = [...this.state.userSelections]
       .sort((a, b) => a.id - b.id)
       .reduce((result, userChoice) => {
         result.push(userChoice.value);
@@ -70,6 +70,8 @@ class QuestionGenreScreen extends React.PureComponent {
       }
     } = this.props;
 
+    const {audioPlayerID} = this.state;
+
     return (
       <section className="game game--genre">
         <GameHeader/>
@@ -81,7 +83,7 @@ class QuestionGenreScreen extends React.PureComponent {
             {answers.map((answer, index) => (
               <div className="track" key={`${quesID}-${index}-answer`}>
                 <AudioPlayer
-                  isPlaying={index === this.state.audioPlayerID ? true : false}
+                  isPlaying={index === audioPlayerID ? true : false}
                   src={answer.src}
                   onPlayButtonClick={() => this._playButtonClickHandler(index)}
                 />

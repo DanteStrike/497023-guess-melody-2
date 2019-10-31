@@ -33,9 +33,10 @@ class AudioPlayer extends React.PureComponent {
   }
 
   componentDidUpdate() {
+    const {isPlaying} = this.props;
     const audio = this._audioRef.current;
 
-    if (this.props.isPlaying) {
+    if (isPlaying) {
       audio.play();
     } else {
       audio.pause();
@@ -62,10 +63,12 @@ class AudioPlayer extends React.PureComponent {
   }
 
   render() {
+    const {isPlaying, isLoading} = this.state;
+
     return (
       <Fragment>
-        <button className={`track__button track__button--${this.state.isPlaying ? `pause` : `play`}`} type="button"
-          onClick={() => this._playerButtonClickHandler()} disabled={this.state.isLoading}/>
+        <button className={`track__button track__button--${isPlaying ? `pause` : `play`}`} type="button"
+          onClick={() => this._playerButtonClickHandler()} disabled={isLoading}/>
         <div className="track__status">
           <audio ref={this._audioRef} />
         </div>

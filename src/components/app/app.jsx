@@ -8,6 +8,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
 
+    this._questionsAmount = props.questions.length;
+
     this.state = {
       questionIndex: -1
     };
@@ -16,7 +18,7 @@ class App extends React.Component {
   _userAnswerClickHandler() {
     this.setState((prevState) => {
       const nextIndex = prevState.questionIndex + 1;
-      const isEnd = nextIndex >= this.props.questions.length;
+      const isEnd = nextIndex >= this._questionsAmount;
 
       return {
         questionIndex: !isEnd ? nextIndex : -1
@@ -32,6 +34,7 @@ class App extends React.Component {
 
   static getScreen(questionIndex, props, onUserAnswerClick) {
     const {gameTime, errorAmount} = props;
+
     if (questionIndex === -1) {
       return (
         <WelcomeScreen
