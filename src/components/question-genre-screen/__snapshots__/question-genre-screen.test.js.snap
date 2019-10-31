@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`render correctly QuestionArtistScreen component 1`] = `
+exports[`render correctly QuestionGenreScreen component 1`] = `
 <section
   className="game game--genre"
 >
@@ -94,22 +94,24 @@ exports[`render correctly QuestionArtistScreen component 1`] = `
       >
         <button
           className="track__button track__button--play"
+          disabled={true}
+          onClick={[Function]}
           type="button"
         />
         <div
           className="track__status"
         >
-          <audio
-            src=""
-          />
+          <audio />
         </div>
         <div
           className="game__answer"
         >
           <input
+            checked={false}
             className="game__input visually-hidden"
             id="answer-0"
             name="answer"
+            onChange={[Function]}
             type="checkbox"
             value="rock"
           />
@@ -126,22 +128,24 @@ exports[`render correctly QuestionArtistScreen component 1`] = `
       >
         <button
           className="track__button track__button--play"
+          disabled={true}
+          onClick={[Function]}
           type="button"
         />
         <div
           className="track__status"
         >
-          <audio
-            src=""
-          />
+          <audio />
         </div>
         <div
           className="game__answer"
         >
           <input
+            checked={false}
             className="game__input visually-hidden"
             id="answer-1"
             name="answer"
+            onChange={[Function]}
             type="checkbox"
             value="rock"
           />
@@ -158,22 +162,24 @@ exports[`render correctly QuestionArtistScreen component 1`] = `
       >
         <button
           className="track__button track__button--play"
+          disabled={true}
+          onClick={[Function]}
           type="button"
         />
         <div
           className="track__status"
         >
-          <audio
-            src=""
-          />
+          <audio />
         </div>
         <div
           className="game__answer"
         >
           <input
+            checked={false}
             className="game__input visually-hidden"
             id="answer-2"
             name="answer"
+            onChange={[Function]}
             type="checkbox"
             value="pop"
           />
@@ -190,22 +196,24 @@ exports[`render correctly QuestionArtistScreen component 1`] = `
       >
         <button
           className="track__button track__button--play"
+          disabled={true}
+          onClick={[Function]}
           type="button"
         />
         <div
           className="track__status"
         >
-          <audio
-            src=""
-          />
+          <audio />
         </div>
         <div
           className="game__answer"
         >
           <input
+            checked={false}
             className="game__input visually-hidden"
             id="answer-3"
             name="answer"
+            onChange={[Function]}
             type="checkbox"
             value="jazz"
           />

@@ -4,6 +4,7 @@ import QuestionArtistScreen from "./question-artist-screen.jsx";
 
 it(`render correctly QuestionArtistScreen component`, () => {
   const questionMock = {
+    id: 1,
     type: `artist`,
     song: {
       artist: `Plаcido Domingo`,
@@ -31,7 +32,17 @@ it(`render correctly QuestionArtistScreen component`, () => {
           screenIndex={1}
           question={questionMock}
           onAnswerClick={jest.fn()}
-        />
+        />,
+        {
+          createNodeMock: (element) => {
+            if (element.type === `audio`) {
+              return {
+                src: null
+              };
+            }
+            return null;
+          }
+        }
     )
     .toJSON();
 

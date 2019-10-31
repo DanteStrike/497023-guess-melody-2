@@ -1,5 +1,29 @@
 export const questions = [
   {
+    id: 1,
+    type: `genre`,
+    genre: `rock`,
+    answers: [
+      {
+        src: `https://upload.wikimedia.org/wikipedia/commons/d/de/United_States_Navy_Band_-_God_Save_the_Queen.ogg`,
+        genre: `rock`
+      },
+      {
+        src: `https://upload.wikimedia.org/wikipedia/commons/d/de/United_States_Navy_Band_-_God_Save_the_Queen.ogg`,
+        genre: `jazz`
+      },
+      {
+        src: `https://upload.wikimedia.org/wikipedia/commons/d/de/United_States_Navy_Band_-_God_Save_the_Queen.ogg`,
+        genre: `rock`
+      },
+      {
+        src: `https://upload.wikimedia.org/wikipedia/commons/d/de/United_States_Navy_Band_-_God_Save_the_Queen.ogg`,
+        genre: `rock`
+      }
+    ]
+  },
+  {
+    id: 2,
     type: `genre`,
     genre: `jazz`,
     answers: [
@@ -22,6 +46,7 @@ export const questions = [
     ]
   },
   {
+    id: 3,
     type: `artist`,
     song: {
       artist: `Plаcido Domingo`,
@@ -43,44 +68,23 @@ export const questions = [
     ]
   },
   {
-    type: `genre`,
-    genre: `pop`,
-    answers: [
-      {
-        src: `https://upload.wikimedia.org/wikipedia/commons/d/de/United_States_Navy_Band_-_God_Save_the_Queen.ogg`,
-        genre: `jazz`
-      },
-      {
-        src: `https://upload.wikimedia.org/wikipedia/commons/d/de/United_States_Navy_Band_-_God_Save_the_Queen.ogg`,
-        genre: `jazz`
-      },
-      {
-        src: `https://upload.wikimedia.org/wikipedia/commons/d/de/United_States_Navy_Band_-_God_Save_the_Queen.ogg`,
-        genre: `pop`
-      },
-      {
-        src: `https://upload.wikimedia.org/wikipedia/commons/d/de/United_States_Navy_Band_-_God_Save_the_Queen.ogg`,
-        genre: `rock`
-      }
-    ]
-  },
-  {
+    id: 4,
     type: `artist`,
     song: {
-      artist: `Jose Carreras`,
+      artist: `Luciano Pavarotti`,
       src: `https://upload.wikimedia.org/wikipedia/commons/d/de/United_States_Navy_Band_-_God_Save_the_Queen.ogg`
     },
     answers: [
-      {
-        artist: `Luciano Pavarotti`,
-        image: `http://placehold.it/134x134`
-      },
       {
         artist: `Plаcido Domingo`,
         image: `http://placehold.it/134x134`
       },
       {
         artist: `Jose Carreras`,
+        image: `http://placehold.it/134x134`
+      },
+      {
+        artist: `Luciano Pavarotti`,
         image: `http://placehold.it/134x134`
       }
     ]

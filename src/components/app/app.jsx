@@ -8,17 +8,17 @@ class App extends React.Component {
   constructor(props) {
     super(props);
 
+    this._questionsAmount = props.questions.length;
+
     this.state = {
       questionIndex: -1
     };
-
-    this._userAnswerClickHandler = this._userAnswerClickHandler.bind(this);
   }
 
   _userAnswerClickHandler() {
     this.setState((prevState) => {
       const nextIndex = prevState.questionIndex + 1;
-      const isEnd = nextIndex >= this.props.questions.length;
+      const isEnd = nextIndex >= this._questionsAmount;
 
       return {
         questionIndex: !isEnd ? nextIndex : -1
@@ -28,12 +28,13 @@ class App extends React.Component {
 
   render() {
     return (
-      App.getScreen(this.state.questionIndex, this.props, this._userAnswerClickHandler)
+      App.getScreen(this.state.questionIndex, this.props, () => this._userAnswerClickHandler())
     );
   }
 
   static getScreen(questionIndex, props, onUserAnswerClick) {
     const {gameTime, errorAmount} = props;
+
     if (questionIndex === -1) {
       return (
         <WelcomeScreen
@@ -51,7 +52,6 @@ class App extends React.Component {
       case `genre`:
         return (
           <QuestionGenreScreen
-            screenIndex={questionIndex}
             question={currentQuestion}
             onAnswerClick={onUserAnswerClick}
           />
@@ -60,7 +60,6 @@ class App extends React.Component {
       case `artist`:
         return (
           <QuestionArtistScreen
-            screenIndex={questionIndex}
             question={currentQuestion}
             onAnswerClick={onUserAnswerClick}
           />
@@ -76,6 +75,7 @@ App.propTypes = {
   errorAmount: PropTypes.number.isRequired,
   questions: PropTypes.arrayOf(PropTypes.oneOfType([
     PropTypes.exact({
+      id: PropTypes.number.isRequired,
       type: PropTypes.oneOf([`genre`]),
       genre: PropTypes.oneOf([`jazz`, `rock`, `pop`]),
       answers: PropTypes.arrayOf(
@@ -86,6 +86,7 @@ App.propTypes = {
       )
     }),
     PropTypes.exact({
+      id: PropTypes.number.isRequired,
       type: PropTypes.oneOf([`artist`]),
       song: PropTypes.exact({
         artist: PropTypes.string.isRequired,

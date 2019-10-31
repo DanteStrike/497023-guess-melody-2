@@ -7,6 +7,7 @@ Enzyme.configure({adapter: new Adapter()});
 
 it(`Should return user answers correctly on submit form`, () => {
   const questionMock = {
+    id: 1,
     song: {
       artist: `Plаcido Domingo`,
       src: ``
@@ -23,15 +24,18 @@ it(`Should return user answers correctly on submit form`, () => {
 
   const component = shallow(
       <QuestionArtistScreen
-        screenIndex={0}
         question={questionMock}
         onAnswerClick={onAnswerClickMock}
       />
   );
 
-  const preventDefault = () => {};
+  expect(component.state(`currentAnswer`)).toMatchObject([]);
+
+  const artistQuestionInput = component.find(`#answer-0`);
+  artistQuestionInput.simulate(`change`, {target: {value: `Plаcido Domingo`}});
+  expect(component.state(`currentAnswer`)).toMatchObject([`Plаcido Domingo`]);
 
   const artistQuestionForm = component.find(`form.game__artist`);
-  artistQuestionForm.simulate(`change`, {preventDefault});
-  expect(onAnswerClickMock.mock.calls[0][0]).toMatchObject([]);
+  artistQuestionForm.simulate(`change`);
+  expect(onAnswerClickMock.mock.calls[0][0]).toMatchObject([`Plаcido Domingo`]);
 });
