@@ -1,9 +1,11 @@
 import React from "react";
 import Enzyme, {mount} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import App from "./app.jsx";
+import {App} from "./app.jsx";
 
 Enzyme.configure({adapter: new Adapter()});
+
+HTMLAudioElement.prototype.pause = () => { /* do nothing */ };
 
 describe(`APP screens should switch`, () => {
 
@@ -25,19 +27,19 @@ describe(`APP screens should switch`, () => {
     const AppComponent = mount(
         <App
           gameTime={1}
-          errorAmount={1}
+          maxMistakes={1}
           questions={questionsMock}
+          step={-1}
+          mistakes={0}
+          onUserAnswerClick={jest.fn}
+          onWelcomeScreenClick={jest.fn}
         />
     );
-
-    expect(AppComponent.state(`questionIndex`)).toEqual(-1);
 
     const startGameButton = AppComponent.find(`.welcome__button`);
     expect(startGameButton.exists()).toEqual(true);
     startGameButton.simulate(`click`);
-
-    expect(AppComponent.state(`questionIndex`)).toEqual(0);
-    AppComponent.update();
+    AppComponent.setProps({step: 0});
 
     const questionGenreScreen = AppComponent.find(`.game--genre`);
     expect(questionGenreScreen.exists()).toEqual(true);
@@ -57,7 +59,7 @@ describe(`APP screens should switch`, () => {
         ]
       },
       {
-        id: 1,
+        id: 2,
         type: `artist`,
         song: {
           artist: `Plаcido Domingo`,
@@ -75,20 +77,21 @@ describe(`APP screens should switch`, () => {
     const AppComponent = mount(
         <App
           gameTime={1}
-          errorAmount={1}
+          maxMistakes={1}
           questions={questionsMock}
+          step={0}
+          mistakes={0}
+          onUserAnswerClick={jest.fn}
+          onWelcomeScreenClick={jest.fn}
         />
     );
 
-    AppComponent.setState({questionIndex: 0});
     const genreScreenForm = AppComponent.find(`.game__tracks`);
     expect(genreScreenForm.exists()).toEqual(true);
     genreScreenForm.simulate(`submit`, {
       preventDefault: ()=>{}
     });
-
-    expect(AppComponent.state(`questionIndex`)).toEqual(1);
-    AppComponent.update();
+    AppComponent.setProps({step: 1});
 
     const questionArtistScreen = AppComponent.find(`.game--artist`);
     expect(questionArtistScreen.exists()).toEqual(true);
@@ -115,19 +118,19 @@ describe(`APP screens should switch`, () => {
     const AppComponent = mount(
         <App
           gameTime={1}
-          errorAmount={1}
+          maxMistakes={1}
           questions={questionsMock}
+          step={0}
+          mistakes={0}
+          onUserAnswerClick={jest.fn}
+          onWelcomeScreenClick={jest.fn}
         />
     );
-
-    AppComponent.setState({questionIndex: 0});
 
     const artistScreenForm = AppComponent.find(`.game__artist`);
     expect(artistScreenForm.exists()).toEqual(true);
     artistScreenForm.simulate(`change`);
-
-    expect(AppComponent.state(`questionIndex`)).toEqual(-1);
-    AppComponent.update();
+    AppComponent.setProps({step: -1});
 
     const startGameButton = AppComponent.find(`.welcome__button`);
     expect(startGameButton.exists()).toEqual(true);

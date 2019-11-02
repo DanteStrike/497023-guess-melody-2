@@ -5,8 +5,8 @@ import AudioPlayer from "./audio-player.jsx";
 
 Enzyme.configure({adapter: new Adapter()});
 
-window.HTMLMediaElement.prototype.play = () => { /* do nothing */ };
-window.HTMLMediaElement.prototype.pause = () => { /* do nothing */ };
+HTMLAudioElement.prototype.play = () => { /* do nothing */ };
+HTMLAudioElement.prototype.pause = () => { /* do nothing */ };
 
 
 it(`Should disable play button while on loading`, () => {
