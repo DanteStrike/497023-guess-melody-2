@@ -1,4 +1,5 @@
 import React from "react";
+import UserMistakesStatus from "../user-mistakes-status/user-mistakes-status.jsx";
 
 const gameHeaderStyle = {
   filter: `url(#blur)`,
@@ -25,11 +26,7 @@ const GameHeader = () => {
         <span className="timer__secs">00</span>
       </div>
 
-      <div className="game__mistakes">
-        <div className="wrong"></div>
-        <div className="wrong"></div>
-        <div className="wrong"></div>
-      </div>
+      <UserMistakesStatus/>
     </header>
   );
 };
