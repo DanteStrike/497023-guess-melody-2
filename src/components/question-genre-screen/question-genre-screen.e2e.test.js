@@ -35,7 +35,6 @@ it(`Should preventDefault on form submit`, () => {
   componentForm.simulate(`submit`, {preventDefault});
 
   expect(preventDefault).toBeCalled();
-  expect(onAnswerClickMock.mock.calls[0][0]).toMatchObject([]);
 });
 
 it(`Should return user answers correctly on submit form`, () => {
@@ -64,25 +63,17 @@ it(`Should return user answers correctly on submit form`, () => {
       />
   );
 
-  expect(component.state(`userSelections`)).toMatchObject([]);
+  expect(component.state(`userAnswers`)).toMatchObject([false, false]);
 
   const genreQuestionForm = component.find(`form.game__tracks`);
   genreQuestionForm.simulate(`submit`, {preventDefault: () => {}});
-  expect(onAnswerClickMock.mock.calls[0][0]).toMatchObject([]);
+  expect(onAnswerClickMock.mock.calls[0][0]).toMatchObject([false, false]);
 
   const answerOneInput = component.find(`#answer-0`);
   const answerTwoInput = component.find(`#answer-1`);
   answerTwoInput.simulate(`change`);
   answerOneInput.simulate(`change`);
 
-  expect(component.state(`userSelections`)).toMatchObject([{
-    id: 1,
-    value: `pop`
-  }, {
-    id: 0,
-    value: `jazz`
-  }]);
-
   genreQuestionForm.simulate(`submit`, {preventDefault: () => {}});
-  expect(onAnswerClickMock.mock.calls[1][0]).toMatchObject([`jazz`, `pop`]);
+  expect(onAnswerClickMock.mock.calls[1][0]).toMatchObject([true, true]);
 });

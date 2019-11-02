@@ -29,13 +29,13 @@ it(`Should return user answers correctly on submit form`, () => {
       />
   );
 
-  expect(component.state(`currentAnswer`)).toMatchObject([]);
+  expect(component.state(`userAnswer`)).toBeNull();
 
   const artistQuestionInput = component.find(`#answer-0`);
-  artistQuestionInput.simulate(`change`, {target: {value: `Plаcido Domingo`}});
-  expect(component.state(`currentAnswer`)).toMatchObject([`Plаcido Domingo`]);
+  artistQuestionInput.simulate(`change`);
+  expect(component.state(`userAnswer`)).toEqual(`Plаcido Domingo`);
 
   const artistQuestionForm = component.find(`form.game__artist`);
   artistQuestionForm.simulate(`change`);
-  expect(onAnswerClickMock.mock.calls[0][0]).toMatchObject([`Plаcido Domingo`]);
+  expect(onAnswerClickMock.mock.calls[0][0]).toEqual(`Plаcido Domingo`);
 });
