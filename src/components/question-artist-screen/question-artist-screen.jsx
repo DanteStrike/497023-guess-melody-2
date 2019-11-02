@@ -9,7 +9,6 @@ class QuestionArtistScreen extends React.PureComponent {
 
     this.state = {
       activeAudioPlayerID: -1,
-      userAnswer: null
     };
   }
 
@@ -20,19 +19,13 @@ class QuestionArtistScreen extends React.PureComponent {
   }
 
   _answerChangeHandler(artist) {
-    this.setState({
-      userAnswer: artist
-    });
+    const {onAnswerClick} = this.props;
+    onAnswerClick(artist);
   }
 
   _answersChangeHandler() {
-    const {onAnswerClick} = this.props;
-    const {userAnswer} = this.state;
-
-    onAnswerClick(userAnswer);
     this.setState({
       activeAudioPlayerID: -1,
-      userAnswer: null
     });
   }
 

@@ -5,7 +5,7 @@ import QuestionArtistScreen from "./question-artist-screen.jsx";
 
 Enzyme.configure({adapter: new Adapter()});
 
-it(`Should return user answers correctly on submit form`, () => {
+it(`Should return user answers correctly on input change`, () => {
   const questionMock = {
     id: 1,
     song: {
@@ -29,11 +29,8 @@ it(`Should return user answers correctly on submit form`, () => {
       />
   );
 
-  expect(component.state(`userAnswer`)).toBeNull();
-
   const artistQuestionInput = component.find(`#answer-0`);
   artistQuestionInput.simulate(`change`);
-  expect(component.state(`userAnswer`)).toEqual(`Plаcido Domingo`);
 
   const artistQuestionForm = component.find(`form.game__artist`);
   artistQuestionForm.simulate(`change`);
