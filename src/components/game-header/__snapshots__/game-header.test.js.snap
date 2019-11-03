@@ -45,7 +45,7 @@ exports[`render correctly GameHeader component 1`] = `
     <span
       className="timer__mins"
     >
-      05
+      00
     </span>
     <span
       className="timer__dots"
@@ -60,16 +60,6 @@ exports[`render correctly GameHeader component 1`] = `
   </div>
   <div
     className="game__mistakes"
-  >
-    <div
-      className="wrong"
-    />
-    <div
-      className="wrong"
-    />
-    <div
-      className="wrong"
-    />
-  </div>
+  />
 </header>
 `;
