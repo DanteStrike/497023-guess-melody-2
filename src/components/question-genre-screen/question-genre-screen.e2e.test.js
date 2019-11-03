@@ -2,11 +2,16 @@ import React from "react";
 import Enzyme, {shallow, mount} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import QuestionGenreScreen from "./question-genre-screen.jsx";
+import {Provider} from "react-redux";
+import {createStore} from "redux";
+import {reducer} from "../../reducer/reducer";
 
 Enzyme.configure({adapter: new Adapter()});
 
 window.HTMLMediaElement.prototype.play = () => { /* do nothing */ };
 window.HTMLMediaElement.prototype.pause = () => { /* do nothing */ };
+
+const store = createStore(reducer);
 
 it(`Should preventDefault on form submit`, () => {
   const questionMock = {
@@ -57,13 +62,15 @@ it(`Should return user answers correctly on submit form`, () => {
   const onAnswerClickMock = jest.fn();
 
   const component = mount(
-      <QuestionGenreScreen
-        question={questionMock}
-        onAnswerClick={onAnswerClickMock}
-      />
+      <Provider store={store}>
+        <QuestionGenreScreen
+          question={questionMock}
+          onAnswerClick={onAnswerClickMock}
+        />
+      </Provider>
   );
 
-  expect(component.state(`userAnswers`)).toMatchObject([false, false]);
+  expect(component.find(QuestionGenreScreen).state(`userAnswers`)).toMatchObject([false, false]);
 
   const genreQuestionForm = component.find(`form.game__tracks`);
   genreQuestionForm.simulate(`submit`, {preventDefault: () => {}});
