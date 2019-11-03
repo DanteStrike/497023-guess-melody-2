@@ -8,15 +8,19 @@ const isGenreAnswersCorrect = (userAnswers, question) => {
 
 const initialState = {
   step: -1,
-  mistakes: 0
+  mistakes: 0,
+  gameTimeLeft: 0
 };
 
 const ActionCreator = {
-  incrementStep: (step, maxSteps) => {
-    if (step >= maxSteps) {
-      return {
-        type: `RESET`
-      };
+  incrementStep: (step, maxSteps, gameTimer) => {
+    if (step === maxSteps) {
+      gameTimer.stop();
+      return {};
+    }
+
+    if (step === -1) {
+      gameTimer.start();
     }
 
     return {
@@ -25,7 +29,7 @@ const ActionCreator = {
     };
   },
 
-  incrementMistakes: (userChoice, question, mistakes, maxMistakes) => {
+  incrementMistakes: (userChoice, question, mistakes, maxMistakes, gameTimer) => {
     let answerIsCorrect = false;
 
     switch (question.type) {
@@ -37,17 +41,35 @@ const ActionCreator = {
         break;
     }
 
-    if (!answerIsCorrect && (mistakes + 1) > maxMistakes) {
-      return {
-        type: `RESET`
-      };
+    if (!answerIsCorrect && mistakes === maxMistakes) {
+      gameTimer.stop();
     }
 
     return {
       type: `INCREMENT_MISTAKES`,
       payload: answerIsCorrect ? 0 : 1
     };
-  }
+  },
+
+  setGameTime: (timestamp, gameTimer) => {
+    gameTimer.setTime(timestamp);
+
+    return {
+      type: `SET_GAME_TIME`,
+      payload: timestamp
+    };
+  },
+
+  decreaseGameTime: (timeTick, timeLeft) => {
+    return {
+      type: `DECREASE_GAME_TIME`,
+      payload: timeLeft - timeTick < 0 ? 0 : timeTick
+    };
+  },
+
+  resetGame: () => ({
+    type: `RESET`,
+  })
 };
 
 const reducer = (state = initialState, action) => {
@@ -59,6 +81,14 @@ const reducer = (state = initialState, action) => {
     case `INCREMENT_MISTAKES`:
       return Object.assign({}, state, {
         mistakes: state.mistakes + action.payload
+      });
+    case `SET_GAME_TIME`:
+      return Object.assign({}, state, {
+        gameTimeLeft: action.payload
+      });
+    case `DECREASE_GAME_TIME`:
+      return Object.assign({}, state, {
+        gameTimeLeft: state.gameTimeLeft - action.payload
       });
     case `RESET`:
       return Object.assign({}, initialState);
