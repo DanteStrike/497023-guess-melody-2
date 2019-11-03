@@ -8,7 +8,7 @@ import {reducer} from "./reducer/reducer.js";
 
 const init = (gameQuestions) => {
   const settings = {
-    gameTimeMinutes: 20,
+    gameTimeMinutes: 0.3,
     errorAmount: 2
   };
 
