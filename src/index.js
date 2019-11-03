@@ -4,11 +4,11 @@ import {createStore} from "redux";
 import {Provider} from "react-redux";
 import App from "./components/app/app.jsx";
 import {questions} from "./mocks/questions.js";
-import {reducer} from "./reducer.js";
+import {reducer} from "./reducer/reducer.js";
 
 const init = (gameQuestions) => {
   const settings = {
-    gameTime: 1,
+    gameTimeMinutes: 0.2,
     errorAmount: 2
   };
 
@@ -17,7 +17,7 @@ const init = (gameQuestions) => {
   ReactDOM.render(
       <Provider store={store}>
         <App
-          gameTime={settings.gameTime}
+          gameTimeMinutes={settings.gameTimeMinutes}
           maxMistakes={settings.errorAmount}
           questions={gameQuestions}
         />
