@@ -145,28 +145,28 @@ describe(`Reducer should work correctly`, () => {
   it(`Reducer should set timer by a given value`, () => {
     const timestamp = 5 * Time.MILLISECONDS_IN_MINUTE;
     const state = {
-      gameTimeLeft: 123
+      gameTimeRemaining: 123
     };
     const action = {
       type: `SET_GAME_TIME`,
       payload: timestamp
     };
     expect(reducer(state, action)).toMatchObject({
-      gameTimeLeft: timestamp
+      gameTimeRemaining: timestamp
     });
   });
 
   it(`Reducer should decrease game time by a given value`, () => {
     const timestamp = 5 * Time.MILLISECONDS_IN_MINUTE;
     const state = {
-      gameTimeLeft: timestamp
+      gameTimeRemaining: timestamp
     };
     const action = {
       type: `DECREASE_GAME_TIME`,
       payload: Time.MILLISECONDS_IN_SECOND
     };
     expect(reducer(state, action)).toMatchObject({
-      gameTimeLeft: timestamp - Time.MILLISECONDS_IN_SECOND
+      gameTimeRemaining: timestamp - Time.MILLISECONDS_IN_SECOND
     });
   });
 });

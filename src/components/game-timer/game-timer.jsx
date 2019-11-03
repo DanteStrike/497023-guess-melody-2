@@ -5,8 +5,8 @@ import {formatTimeToMS} from "../../utils/time/time.js";
 
 class GameTimer extends React.PureComponent {
   render() {
-    const {gameTimeLeft} = this.props;
-    const time = formatTimeToMS(gameTimeLeft);
+    const {gameTimeRemaining} = this.props;
+    const time = formatTimeToMS(gameTimeRemaining);
 
     return (
       <div className="timer__value" xmlns="http://www.w3.org/1999/xhtml">
@@ -19,11 +19,11 @@ class GameTimer extends React.PureComponent {
 }
 
 GameTimer.propTypes = {
-  gameTimeLeft: PropTypes.number.isRequired,
+  gameTimeRemaining: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
-  gameTimeLeft: state.gameTimeLeft
+  gameTimeRemaining: state.gameTimeRemaining
 });
 
 export {GameTimer};

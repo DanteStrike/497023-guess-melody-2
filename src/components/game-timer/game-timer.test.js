@@ -6,7 +6,7 @@ it(`render correctly GameHeader component`, () => {
   const component = renderer
     .create(
         <GameTimer
-          gameTimeLeft={500}
+          gameTimeRemaining={500}
         />
     )
     .toJSON();

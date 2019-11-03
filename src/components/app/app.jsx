@@ -12,7 +12,7 @@ import Timer from "../../reducer/timer/timer.js";
 
 class App extends React.PureComponent {
   _getScreen() {
-    const {questions, step, gameTimeMinutes, gameTimeLeft, mistakes, maxMistakes, onGameResetClick} = this.props;
+    const {questions, step, gameTimeMinutes, gameTimeRemaining, mistakes, maxMistakes, onGameResetClick} = this.props;
     const gameTimestamp = gameTimeMinutes * Time.MILLISECONDS_IN_MINUTE;
     const maxSteps = questions.length;
 
@@ -27,10 +27,10 @@ class App extends React.PureComponent {
       );
     }
 
-    if (gameTimeLeft === 0 || mistakes > maxMistakes) {
+    if (gameTimeRemaining === 0 || mistakes > maxMistakes) {
       return (
         <GameOverScreen
-          isTimeOver={gameTimeLeft === 0}
+          isTimeOver={gameTimeRemaining === 0}
           onResetGameClick={() => onGameResetClick()}
         />
       );
@@ -39,7 +39,7 @@ class App extends React.PureComponent {
     if (step === maxSteps) {
       return (
         <WinScreen
-          gameDuration={gameTimestamp - gameTimeLeft}
+          gameDuration={gameTimestamp - gameTimeRemaining}
           mistakes={mistakes}
           result={0}
           fastAnswersAmount={0}
@@ -109,14 +109,14 @@ App.propTypes = {
   ])),
   step: PropTypes.number.isRequired,
   mistakes: PropTypes.number.isRequired,
-  gameTimeLeft: PropTypes.number.isRequired,
+  gameTimeRemaining: PropTypes.number.isRequired,
   onWelcomeScreenClick: PropTypes.func.isRequired,
   onUserAnswerClick: PropTypes.func.isRequired,
   onGameResetClick: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
-  gameTimeLeft: state.gameTimeLeft,
+  gameTimeRemaining: state.gameTimeRemaining,
   step: state.step,
   mistakes: state.mistakes
 });

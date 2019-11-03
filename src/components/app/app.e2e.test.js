@@ -51,7 +51,7 @@ describe(`APP screens should switch`, () => {
     const store = createStore(reducer, {
       step: 0,
       mistakes: 0,
-      gameTimeLeft: 20
+      gameTimeRemaining: 20
     });
     const questionsMock = [
       {
@@ -105,7 +105,7 @@ describe(`APP screens should switch`, () => {
     const store = createStore(reducer, {
       step: 0,
       mistakes: 0,
-      gameTimeLeft: 20
+      gameTimeRemaining: 20
     });
     const questionsMock = [
       {
@@ -151,7 +151,7 @@ describe(`APP screens should switch`, () => {
     const store = createStore(reducer, {
       step: 0,
       mistakes: 0,
-      gameTimeLeft: 0
+      gameTimeRemaining: 0
     });
     const questionsMock = [
       {
@@ -193,7 +193,7 @@ describe(`APP screens should switch`, () => {
     const store = createStore(reducer, {
       step: 0,
       mistakes: 3,
-      gameTimeLeft: 10
+      gameTimeRemaining: 10
     });
     const questionsMock = [
       {

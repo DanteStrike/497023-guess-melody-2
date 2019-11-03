@@ -9,7 +9,7 @@ const isGenreAnswersCorrect = (userAnswers, question) => {
 const initialState = {
   step: -1,
   mistakes: 0,
-  gameTimeLeft: 0
+  gameTimeRemaining: 0
 };
 
 const ActionCreator = {
@@ -84,11 +84,11 @@ const reducer = (state = initialState, action) => {
       });
     case `SET_GAME_TIME`:
       return Object.assign({}, state, {
-        gameTimeLeft: action.payload
+        gameTimeRemaining: action.payload
       });
     case `DECREASE_GAME_TIME`:
       return Object.assign({}, state, {
-        gameTimeLeft: state.gameTimeLeft - action.payload
+        gameTimeRemaining: state.gameTimeRemaining - action.payload
       });
     case `RESET`:
       return Object.assign({}, initialState);
