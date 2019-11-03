@@ -14,9 +14,8 @@ const initialState = {
 
 const ActionCreator = {
   incrementStep: (step, maxSteps, gameTimer) => {
-    if (step === maxSteps) {
+    if (step + 1 === maxSteps) {
       gameTimer.stop();
-      return {};
     }
 
     if (step === -1) {
