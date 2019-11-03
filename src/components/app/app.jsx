@@ -4,35 +4,58 @@ import {connect} from "react-redux";
 import WelcomeScreen from "../welcome-screen/welcome-screen.jsx";
 import QuestionGenreScreen from "../question-genre-screen/question-genre-screen.jsx";
 import QuestionArtistScreen from "../question-artist-screen/question-artist-screen.jsx";
-import {ActionCreator} from "../../reducer.js";
+import WinScreen from "../win-screen/win-screen.jsx";
+import GameOverScreen from "../game-over-screen/game-over-screen.jsx";
+import {ActionCreator} from "../../reducer/reducer.js";
+import {Time} from "../../utils/time/time.js";
+import Timer from "../../reducer/timer/timer.js";
 
 class App extends React.PureComponent {
-  _getScreen(question, questionsAmount) {
-    if (!question) {
-      const {
-        gameTime,
-        maxMistakes,
-        step,
-        onWelcomeScreenClick
-      } = this.props;
+  _getScreen() {
+    const {questions, step, gameTimeMinutes, gameTimeLeft, mistakes, maxMistakes, onGameResetClick} = this.props;
+    const gameTimestamp = gameTimeMinutes * Time.MILLISECONDS_IN_MINUTE;
+    const maxSteps = questions.length;
 
+    if (step === -1) {
+      const {onWelcomeScreenClick} = this.props;
       return (
         <WelcomeScreen
-          time={gameTime}
+          time={gameTimeMinutes}
           maxMistakes={maxMistakes}
-          onWelcomeButtonClick={() => onWelcomeScreenClick(step, questionsAmount)}
+          onWelcomeButtonClick={() => onWelcomeScreenClick(step, maxSteps, gameTimestamp)}
         />
       );
     }
 
-    const {onUserAnswerClick, mistakes, maxMistakes, step} = this.props;
+    if (gameTimeLeft === 0 || mistakes > maxMistakes) {
+      return (
+        <GameOverScreen
+          isTimeOver={gameTimeLeft === 0}
+          onResetGameClick={() => onGameResetClick()}
+        />
+      );
+    }
 
+    if (step === maxSteps) {
+      return (
+        <WinScreen
+          gameDuration={gameTimestamp - gameTimeLeft}
+          mistakes={mistakes}
+          result={0}
+          fastAnswersAmount={0}
+          onResetGameClick={() => onGameResetClick()}
+        />
+      );
+    }
+
+    const {onUserAnswerClick} = this.props;
+    const question = questions[step];
     switch (question.type) {
       case `genre`:
         return (
           <QuestionGenreScreen
             question={question}
-            onAnswerClick={(userChoice) => onUserAnswerClick(userChoice, question, mistakes, maxMistakes, step, questionsAmount)}
+            onAnswerClick={(userChoice) => onUserAnswerClick(userChoice, question, mistakes, maxMistakes, step, maxSteps)}
           />
         );
 
@@ -40,27 +63,22 @@ class App extends React.PureComponent {
         return (
           <QuestionArtistScreen
             question={question}
-            onAnswerClick={(userChoice) => onUserAnswerClick(userChoice, question, mistakes, maxMistakes, step, questionsAmount)}
+            onAnswerClick={(userChoice) => onUserAnswerClick(userChoice, question, mistakes, maxMistakes, step, maxSteps)}
           />
         );
     }
-
     return null;
   }
 
   render() {
-    const {questions, step} = this.props;
-    const questionsAmount = questions.length - 1;
-    const question = questions[step];
-
     return (
-      this._getScreen(question, questionsAmount)
+      this._getScreen()
     );
   }
 }
 
 App.propTypes = {
-  gameTime: PropTypes.number.isRequired,
+  gameTimeMinutes: PropTypes.number.isRequired,
   maxMistakes: PropTypes.number.isRequired,
   questions: PropTypes.arrayOf(PropTypes.oneOfType([
     PropTypes.exact({
@@ -91,22 +109,36 @@ App.propTypes = {
   ])),
   step: PropTypes.number.isRequired,
   mistakes: PropTypes.number.isRequired,
+  gameTimeLeft: PropTypes.number.isRequired,
   onWelcomeScreenClick: PropTypes.func.isRequired,
-  onUserAnswerClick: PropTypes.func.isRequired
+  onUserAnswerClick: PropTypes.func.isRequired,
+  onGameResetClick: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
+  gameTimeLeft: state.gameTimeLeft,
   step: state.step,
   mistakes: state.mistakes
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  onWelcomeScreenClick: (step, maxSteps) => dispatch(ActionCreator.incrementStep(step, maxSteps)),
-  onUserAnswerClick: (userChoice, question, mistakes, maxMistakes, step, maxSteps) => {
-    dispatch(ActionCreator.incrementStep(step, maxSteps));
-    dispatch(ActionCreator.incrementMistakes(userChoice, question, mistakes, maxMistakes));
-  }
-});
+const mapDispatchToProps = (dispatch) => {
+  const onTick = (timeTick, timeLeft) => {
+    dispatch(ActionCreator.decreaseGameTime(timeTick, timeLeft));
+  };
+  const gameTimer = new Timer(0, Time.MILLISECONDS_IN_SECOND, onTick);
+
+  return {
+    onWelcomeScreenClick: (step, maxSteps, gameTime) => {
+      dispatch(ActionCreator.setGameTime(gameTime, gameTimer));
+      dispatch(ActionCreator.incrementStep(step, maxSteps, gameTimer));
+    },
+    onUserAnswerClick: (userChoice, question, mistakes, maxMistakes, step, maxSteps) => {
+      dispatch(ActionCreator.incrementStep(step, maxSteps, gameTimer));
+      dispatch(ActionCreator.incrementMistakes(userChoice, question, mistakes, maxMistakes, gameTimer));
+    },
+    onGameResetClick: () => dispatch(ActionCreator.resetGame())
+  };
+};
 
 
 export {App};
