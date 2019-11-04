@@ -8,7 +8,7 @@ import WinScreen from "../win-screen/win-screen.jsx";
 import GameOverScreen from "../game-over-screen/game-over-screen.jsx";
 import {ActionCreator} from "../../reducer/reducer.js";
 import {Time} from "../../utils/time/time.js";
-import Timer from "../../reducer/timer/timer.js";
+import Timer from "../../utils/timer/timer.js";
 
 class App extends React.PureComponent {
   _getScreen() {

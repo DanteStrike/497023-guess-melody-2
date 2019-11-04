@@ -1,5 +1,5 @@
 import Timer from "./timer.js";
-import {Time} from "../../utils/time/time.js";
+import {Time} from "../time/time.js";
 
 describe(`Timer should work correctly`, () => {
   const time = Time.MILLISECONDS_IN_MINUTE;

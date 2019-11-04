@@ -1,4 +1,4 @@
-import {Time} from "../../utils/time/time.js";
+import {Time} from "../time/time.js";
 
 class Timer {
   constructor(time = 0, timeTick = Time.MILLISECONDS_IN_SECOND, onTimeTick = () => {}) {
