@@ -20,7 +20,7 @@ UserMistakesStatus.propTypes = {
   mistakes: PropTypes.number.isRequired
 };
 
-const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
+const mapStateToProps = (state) => ({
   mistakes: state.mistakes
 });
 
