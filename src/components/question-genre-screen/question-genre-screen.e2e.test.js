@@ -4,14 +4,16 @@ import Adapter from "enzyme-adapter-react-16";
 import QuestionGenreScreen from "./question-genre-screen.jsx";
 import {Provider} from "react-redux";
 import {createStore} from "redux";
-import {reducer} from "../../reducer/reducer";
 
 Enzyme.configure({adapter: new Adapter()});
 
 window.HTMLMediaElement.prototype.play = () => { /* do nothing */ };
 window.HTMLMediaElement.prototype.pause = () => { /* do nothing */ };
 
-const store = createStore(reducer);
+const store = createStore(() => ({
+  mistakes: 0,
+  gameTimeRemaining: 0
+}));
 
 it(`Should preventDefault on form submit`, () => {
   const questionMock = {

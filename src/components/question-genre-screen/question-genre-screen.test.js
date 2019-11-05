@@ -3,9 +3,11 @@ import renderer from "react-test-renderer";
 import QuestionGenreScreen from "./question-genre-screen.jsx";
 import {Provider} from "react-redux";
 import {createStore} from "redux";
-import {reducer} from "../../reducer/reducer";
 
-const store = createStore(reducer);
+const store = createStore(() => ({
+  mistakes: 0,
+  gameTimeRemaining: 0
+}));
 
 it(`render correctly QuestionGenreScreen component`, () => {
   const questionMock = {
