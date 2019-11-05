@@ -1,32 +1,32 @@
 import {Time} from "../time/time.js";
 
 class Timer {
-  constructor(time = 0, timeTick = Time.MILLISECONDS_IN_SECOND, onTimeTick = () => {}) {
-    this._timeLeft = time;
+  constructor(timeRemaining = 0, timeTick = Time.MILLISECONDS_IN_SECOND, onTimeTick = () => {}) {
+    this._timeRemaining = timeRemaining;
     this._timeTick = timeTick;
     this._onTimeTick = onTimeTick;
   }
 
   setTime(time) {
-    this._timeLeft = time;
-  }
-
-  tick() {
-    this._onTimeTick(this._timeTick, this._timeLeft);
-
-    if (this._timeLeft - this._timeTick < 0) {
-      this.stop();
-    }
-
-    this._timeLeft -= this._timeTick;
+    this._timeRemaining = time;
   }
 
   start() {
-    this._timerID = setInterval(this.tick.bind(this), this._timeTick);
+    this._timerID = setInterval(this._tick.bind(this), this._timeTick);
   }
 
   stop() {
     clearInterval(this._timerID);
+  }
+
+  _tick() {
+    this._onTimeTick(this._timeTick, this._timeRemaining);
+
+    if (this._timeRemaining - this._timeTick < 0) {
+      this.stop();
+    }
+
+    this._timeRemaining -= this._timeTick;
   }
 }
 

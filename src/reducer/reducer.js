@@ -59,10 +59,10 @@ const ActionCreator = {
     };
   },
 
-  decreaseGameTime: (timeTick, timeLeft) => {
+  decreaseGameTime: (timeTick, timeRemaining) => {
     return {
       type: `DECREASE_GAME_TIME`,
-      payload: timeLeft - timeTick < 0 ? 0 : timeTick
+      payload: timeRemaining - timeTick < 0 ? 0 : timeTick
     };
   },
 

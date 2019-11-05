@@ -122,8 +122,8 @@ const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
 });
 
 const mapDispatchToProps = (dispatch) => {
-  const onTick = (timeTick, timeLeft) => {
-    dispatch(ActionCreator.decreaseGameTime(timeTick, timeLeft));
+  const onTick = (timeTick, timeRemaining) => {
+    dispatch(ActionCreator.decreaseGameTime(timeTick, timeRemaining));
   };
   const gameTimer = new Timer(0, Time.MILLISECONDS_IN_SECOND, onTick);
 
