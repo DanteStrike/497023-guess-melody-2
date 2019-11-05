@@ -13,7 +13,7 @@ Enzyme.configure({adapter: new Adapter()});
 HTMLAudioElement.prototype.pause = () => { /* do nothing */ };
 
 describe(`APP screens should switch`, () => {
-  it(`Should welcome screen to first question on start game button click`, () => {
+  it(`Should switch welcome screen to first question on start game button click`, () => {
     const store = createStore(reducer);
     const questionsMock = [
       {
@@ -180,7 +180,7 @@ describe(`APP screens should switch`, () => {
         </Provider>
     );
 
-    const resetGameButton = AppComponent.find(`.replay`);
+    const resetGameButton = AppComponent.find(`.result .replay`);
     expect(resetGameButton.exists()).toEqual(true);
 
     resetGameButton.simulate(`click`);
