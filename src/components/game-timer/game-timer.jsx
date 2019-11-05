@@ -22,7 +22,7 @@ GameTimer.propTypes = {
   gameTimeRemaining: PropTypes.number.isRequired,
 };
 
-const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
+const mapStateToProps = (state) => ({
   gameTimeRemaining: state.gameTimeRemaining
 });
 

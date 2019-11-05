@@ -115,7 +115,7 @@ App.propTypes = {
   onGameResetClick: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
+const mapStateToProps = (state) => ({
   gameTimeRemaining: state.gameTimeRemaining,
   step: state.step,
   mistakes: state.mistakes
