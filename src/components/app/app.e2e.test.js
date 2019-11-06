@@ -2,12 +2,19 @@ import React from "react";
 import Enzyme, {mount} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import App from "./app.jsx";
+import {Provider} from "react-redux";
+import {createStore} from "redux";
+import {reducer} from "../../reducer/reducer";
+
+jest.useFakeTimers();
 
 Enzyme.configure({adapter: new Adapter()});
 
-describe(`APP screens should switch`, () => {
+HTMLAudioElement.prototype.pause = () => { /* do nothing */ };
 
-  it(`On start game button click: welcome screen should switch to first question`, () => {
+describe(`APP screens should switch`, () => {
+  it(`Should switch welcome screen to first question on start game button click`, () => {
+    const store = createStore(reducer);
     const questionsMock = [
       {
         id: 1,
@@ -23,27 +30,29 @@ describe(`APP screens should switch`, () => {
     ];
 
     const AppComponent = mount(
-        <App
-          gameTime={1}
-          errorAmount={1}
-          questions={questionsMock}
-        />
+        <Provider store={store}>
+          <App
+            gameTimeMinutes={1}
+            maxMistakes={1}
+            questions={questionsMock}
+          />
+        </Provider>
     );
-
-    expect(AppComponent.state(`questionIndex`)).toEqual(-1);
 
     const startGameButton = AppComponent.find(`.welcome__button`);
     expect(startGameButton.exists()).toEqual(true);
     startGameButton.simulate(`click`);
 
-    expect(AppComponent.state(`questionIndex`)).toEqual(0);
-    AppComponent.update();
-
     const questionGenreScreen = AppComponent.find(`.game--genre`);
     expect(questionGenreScreen.exists()).toEqual(true);
   });
 
-  it(`Should switch questions screens`, () => {
+  it(`Should switch questions screens on user answer`, () => {
+    const store = createStore(reducer, {
+      step: 0,
+      mistakes: 0,
+      gameTimeRemaining: 20
+    });
     const questionsMock = [
       {
         id: 1,
@@ -57,7 +66,7 @@ describe(`APP screens should switch`, () => {
         ]
       },
       {
-        id: 1,
+        id: 2,
         type: `artist`,
         song: {
           artist: `Plаcido Domingo`,
@@ -73,28 +82,31 @@ describe(`APP screens should switch`, () => {
     ];
 
     const AppComponent = mount(
-        <App
-          gameTime={1}
-          errorAmount={1}
-          questions={questionsMock}
-        />
+        <Provider store={store}>
+          <App
+            gameTimeMinutes={10}
+            maxMistakes={2}
+            questions={questionsMock}
+          />
+        </Provider>
     );
 
-    AppComponent.setState({questionIndex: 0});
     const genreScreenForm = AppComponent.find(`.game__tracks`);
     expect(genreScreenForm.exists()).toEqual(true);
     genreScreenForm.simulate(`submit`, {
       preventDefault: ()=>{}
     });
 
-    expect(AppComponent.state(`questionIndex`)).toEqual(1);
-    AppComponent.update();
-
     const questionArtistScreen = AppComponent.find(`.game--artist`);
     expect(questionArtistScreen.exists()).toEqual(true);
   });
 
-  it(`Should return to welcome screen after game end`, () => {
+  it(`Should switch to win screen on game complete`, () => {
+    const store = createStore(reducer, {
+      step: 0,
+      mistakes: 0,
+      gameTimeRemaining: 20
+    });
     const questionsMock = [
       {
         id: 1,
@@ -113,21 +125,107 @@ describe(`APP screens should switch`, () => {
     ];
 
     const AppComponent = mount(
-        <App
-          gameTime={1}
-          errorAmount={1}
-          questions={questionsMock}
-        />
+        <Provider store={store}>
+          <App
+            gameTimeMinutes={10}
+            maxMistakes={2}
+            questions={questionsMock}
+          />
+        </Provider>
     );
 
-    AppComponent.setState({questionIndex: 0});
+    const artistInput = AppComponent.find(`#answer-0`);
+    expect(artistInput.exists()).toEqual(true);
+    artistInput.simulate(`change`);
 
-    const artistScreenForm = AppComponent.find(`.game__artist`);
-    expect(artistScreenForm.exists()).toEqual(true);
-    artistScreenForm.simulate(`change`);
+    const resetGameButton = AppComponent.find(`.login .replay`);
+    expect(resetGameButton.exists()).toEqual(true);
 
-    expect(AppComponent.state(`questionIndex`)).toEqual(-1);
-    AppComponent.update();
+    resetGameButton.simulate(`click`);
+
+    const startGameButton = AppComponent.find(`.welcome__button`);
+    expect(startGameButton.exists()).toEqual(true);
+  });
+
+  it(`Should switch ques screen to game over screen on timeout (store.gameTime === 0)`, () => {
+    const store = createStore(reducer, {
+      step: 0,
+      mistakes: 0,
+      gameTimeRemaining: 0
+    });
+    const questionsMock = [
+      {
+        id: 1,
+        type: `artist`,
+        song: {
+          artist: `Plаcido Domingo`,
+          src: ``
+        },
+        answers: [
+          {
+            artist: `Plаcido Domingo`,
+            image: ``
+          }
+        ]
+      },
+    ];
+
+    const AppComponent = mount(
+        <Provider store={store}>
+          <App
+            gameTimeMinutes={10}
+            maxMistakes={2}
+            questions={questionsMock}
+          />
+        </Provider>
+    );
+
+    const resetGameButton = AppComponent.find(`.result .replay`);
+    expect(resetGameButton.exists()).toEqual(true);
+
+    resetGameButton.simulate(`click`);
+
+    const startGameButton = AppComponent.find(`.welcome__button`);
+    expect(startGameButton.exists()).toEqual(true);
+  });
+
+  it(`Should switch ques screen to game over screen on mistakes > maxMistakes`, () => {
+    const store = createStore(reducer, {
+      step: 0,
+      mistakes: 3,
+      gameTimeRemaining: 10
+    });
+    const questionsMock = [
+      {
+        id: 1,
+        type: `artist`,
+        song: {
+          artist: `Plаcido Domingo`,
+          src: ``
+        },
+        answers: [
+          {
+            artist: `Plаcido Domingo`,
+            image: ``
+          }
+        ]
+      },
+    ];
+
+    const AppComponent = mount(
+        <Provider store={store}>
+          <App
+            gameTimeMinutes={10}
+            maxMistakes={2}
+            questions={questionsMock}
+          />
+        </Provider>
+    );
+
+    const resetGameButton = AppComponent.find(`.result .replay`);
+    expect(resetGameButton.exists()).toEqual(true);
+
+    resetGameButton.simulate(`click`);
 
     const startGameButton = AppComponent.find(`.welcome__button`);
     expect(startGameButton.exists()).toEqual(true);

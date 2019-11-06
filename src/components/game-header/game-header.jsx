@@ -1,4 +1,6 @@
 import React from "react";
+import UserMistakesStatus from "../user-mistakes-status/user-mistakes-status.jsx";
+import GameTimer from "../game-timer/game-timer.jsx";
 
 const gameHeaderStyle = {
   filter: `url(#blur)`,
@@ -19,17 +21,9 @@ const GameHeader = () => {
           style={gameHeaderStyle}/>
       </svg>
 
-      <div className="timer__value" xmlns="http://www.w3.org/1999/xhtml">
-        <span className="timer__mins">05</span>
-        <span className="timer__dots">:</span>
-        <span className="timer__secs">00</span>
-      </div>
+      <GameTimer/>
 
-      <div className="game__mistakes">
-        <div className="wrong"></div>
-        <div className="wrong"></div>
-        <div className="wrong"></div>
-      </div>
+      <UserMistakesStatus/>
     </header>
   );
 };

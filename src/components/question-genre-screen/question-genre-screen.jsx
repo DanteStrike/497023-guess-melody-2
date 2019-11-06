@@ -8,56 +8,41 @@ class QuestionGenreScreen extends React.PureComponent {
   constructor(props) {
     super(props);
 
+    this._answersAmount = props.question.answers.length;
+
     this.state = {
-      audioPlayerID: -1,
-      userSelections: []
+      activeAudioPlayerID: -1,
+      userAnswers: new Array(this._answersAmount).fill(false)
     };
   }
 
   _playButtonClickHandler(audioPlayerID) {
     this.setState((prevState) => ({
-      audioPlayerID: prevState.audioPlayerID === audioPlayerID ? -1 : audioPlayerID
+      activeAudioPlayerID: prevState.activeAudioPlayerID === audioPlayerID ? -1 : audioPlayerID
     }));
   }
 
-  _answerChangeHandler(checkboxID, checkboxValue) {
+  _answerChangeHandler(checkboxIndex) {
     this.setState((prevState) => {
-      const newUserSelections = prevState.userSelections.map((userChoice) => ({
-        id: userChoice.id,
-        value: userChoice.value
-      }));
-      const foundedIndex = newUserSelections.findIndex((userChoice) => userChoice.id === checkboxID);
-
-      if (foundedIndex === -1) {
-        newUserSelections.push({
-          id: checkboxID,
-          value: checkboxValue
-        });
-      } else {
-        newUserSelections.splice(foundedIndex, 1);
-      }
+      const newUserAnswers = [...prevState.userAnswers];
+      newUserAnswers[checkboxIndex] = !newUserAnswers[checkboxIndex];
 
       return {
-        userSelections: newUserSelections
+        userAnswers: newUserAnswers
       };
     });
   }
 
   _answersSubmitHandler(evt) {
     evt.preventDefault();
+    const {onAnswerClick} = this.props;
+    const {userAnswers} = this.state;
 
-    const userAnswers = [...this.state.userSelections]
-      .sort((a, b) => a.id - b.id)
-      .reduce((result, userChoice) => {
-        result.push(userChoice.value);
-        return result;
-      }, []);
-
-    this.props.onAnswerClick(userAnswers);
+    onAnswerClick(userAnswers);
 
     this.setState({
-      audioPlayerID: -1,
-      userSelections: []
+      activeAudioPlayerID: -1,
+      onAnswerClick: new Array(this._answersAmount).fill(false)
     });
   }
 
@@ -70,7 +55,7 @@ class QuestionGenreScreen extends React.PureComponent {
       }
     } = this.props;
 
-    const {audioPlayerID} = this.state;
+    const {activeAudioPlayerID} = this.state;
 
     return (
       <section className="game game--genre">
@@ -83,7 +68,7 @@ class QuestionGenreScreen extends React.PureComponent {
             {answers.map((answer, index) => (
               <div className="track" key={`${quesID}-${index}-answer`}>
                 <AudioPlayer
-                  isPlaying={index === audioPlayerID ? true : false}
+                  isPlaying={index === activeAudioPlayerID}
                   src={answer.src}
                   onPlayButtonClick={() => this._playButtonClickHandler(index)}
                 />
@@ -92,7 +77,7 @@ class QuestionGenreScreen extends React.PureComponent {
                     id={index}
                     value={answer.genre}
                     checked={false}
-                    onChange={() => this._answerChangeHandler(index, answer.genre)}
+                    onChange={() => this._answerChangeHandler(index)}
                   />
                 </div>
               </div>

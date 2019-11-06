@@ -1,6 +1,13 @@
 import React from "react";
 import renderer from "react-test-renderer";
 import QuestionGenreScreen from "./question-genre-screen.jsx";
+import {Provider} from "react-redux";
+import {createStore} from "redux";
+
+const store = createStore(() => ({
+  mistakes: 0,
+  gameTimeRemaining: 0
+}));
 
 it(`render correctly QuestionGenreScreen component`, () => {
   const questionMock = {
@@ -27,12 +34,14 @@ it(`render correctly QuestionGenreScreen component`, () => {
     ]
   };
 
-  const snapshot = renderer
+  const component = renderer
     .create(
-        <QuestionGenreScreen
-          question={questionMock}
-          onAnswerClick={jest.fn()}
-        />,
+        <Provider store={store}>
+          <QuestionGenreScreen
+            question={questionMock}
+            onAnswerClick={jest.fn()}
+          />
+        </Provider>,
         {
           createNodeMock: (element) => {
             if (element.type === `audio`) {
@@ -46,5 +55,5 @@ it(`render correctly QuestionGenreScreen component`, () => {
     )
     .toJSON();
 
-  expect(snapshot).toMatchSnapshot();
+  expect(component).toMatchSnapshot();
 });

@@ -7,7 +7,7 @@ it(`render correctly WelcomeScreen component`, () => {
     .create(
         <WelcomeScreen
           time={1}
-          errorAmount={1}
+          maxMistakes={1}
           onWelcomeButtonClick={jest.fn()}
         />
     )

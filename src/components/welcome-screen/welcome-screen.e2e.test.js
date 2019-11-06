@@ -10,7 +10,7 @@ it(`check welcome button click`, () => {
   const WelcomeScreenComponent = shallow(
       <WelcomeScreen
         time={1}
-        errorAmount={1}
+        maxMistakes={1}
         onWelcomeButtonClick={clickHandler}
       />
   );

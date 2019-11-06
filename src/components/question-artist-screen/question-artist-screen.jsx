@@ -8,31 +8,24 @@ class QuestionArtistScreen extends React.PureComponent {
     super(props);
 
     this.state = {
-      audioPlayerID: -1,
-      currentAnswer: []
+      activeAudioPlayerID: -1,
     };
   }
 
   _playButtonClickHandler(audioPlayerID) {
     this.setState((prevState) => ({
-      audioPlayerID: prevState.audioPlayerID === audioPlayerID ? -1 : audioPlayerID
+      activeAudioPlayerID: prevState.activeAudioPlayerID === audioPlayerID ? -1 : audioPlayerID
     }));
   }
 
-  _answerChangeHandler(userChoice) {
-    this.setState({
-      currentAnswer: [userChoice]
-    });
+  _answerChangeHandler(artist) {
+    const {onAnswerClick} = this.props;
+    onAnswerClick(artist);
   }
 
   _answersChangeHandler() {
-    const {onAnswerClick} = this.props;
-    const currentAnswer = [...this.state.currentAnswer];
-
-    onAnswerClick(currentAnswer);
     this.setState({
-      audioPlayerID: -1,
-      currentAnswer: []
+      activeAudioPlayerID: -1,
     });
   }
 
@@ -44,7 +37,7 @@ class QuestionArtistScreen extends React.PureComponent {
         answers,
       }
     } = this.props;
-    const {audioPlayerID} = this.state;
+    const {activeAudioPlayerID} = this.state;
     const titleAudioPlayer = 0;
 
     return (
@@ -56,7 +49,7 @@ class QuestionArtistScreen extends React.PureComponent {
           <div className="game__track">
             <div className="track">
               <AudioPlayer
-                isPlaying={titleAudioPlayer === audioPlayerID ? true : false}
+                isPlaying={titleAudioPlayer === activeAudioPlayerID}
                 src={song.src}
                 onPlayButtonClick={() => this._playButtonClickHandler(titleAudioPlayer)}
               />
