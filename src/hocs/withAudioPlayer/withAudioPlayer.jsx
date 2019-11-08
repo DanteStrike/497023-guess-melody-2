@@ -29,7 +29,7 @@ const withAudioPlayer = (WrappedComponent) => {
       return (
         <AudioPlayer
           src={source}
-          isPlaying={audioPlayerID === activeAudioPlayerID}
+          isActivePlayer={audioPlayerID === activeAudioPlayerID}
           onPlayButtonClick={() => this._playButtonClickHandler(audioPlayerID)}
         />
       );

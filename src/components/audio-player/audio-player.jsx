@@ -33,10 +33,10 @@ class AudioPlayer extends React.PureComponent {
   }
 
   componentDidUpdate() {
-    const {isPlaying} = this.props;
+    const {isActivePlayer} = this.props;
     const audio = this._audioRef.current;
 
-    if (isPlaying) {
+    if (isActivePlayer) {
       audio.play();
     } else {
       audio.pause();
@@ -78,7 +78,7 @@ class AudioPlayer extends React.PureComponent {
 }
 
 AudioPlayer.propTypes = {
-  isPlaying: PropTypes.bool.isRequired,
+  isActivePlayer: PropTypes.bool.isRequired,
   src: PropTypes.string.isRequired,
   onPlayButtonClick: PropTypes.func.isRequired
 };
