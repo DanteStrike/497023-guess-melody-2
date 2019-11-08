@@ -13,7 +13,12 @@ import withAudioPlayer from "../../hocs/withAudioPlayer/withAudioPlayer.jsx";
 
 const QuestionArtistScreenWrapped = withAudioPlayer(QuestionArtistScreen);
 
-class App extends React.PureComponent {
+class App extends React.Component {
+  shouldComponentUpdate(nextProps) {
+    const {step, mistakes} = this.props;
+    return step !== nextProps.step || mistakes !== nextProps.mistakes || nextProps.gameTimeRemaining === 0;
+  }
+
   _getScreen() {
     const {questions, step, gameTimeMinutes, gameTimeRemaining, mistakes, maxMistakes, onGameResetClick} = this.props;
     const gameTimestamp = gameTimeMinutes * Time.MILLISECONDS_IN_MINUTE;
