@@ -9,9 +9,12 @@ const withAudioPlayer = (WrappedComponent) => {
       this.state = {
         activeAudioPlayerID: -1
       };
+    }
 
-      this._playButtonClickHandler = this._playButtonClickHandler.bind(this);
-      this._renderAudioPlayer = this._renderAudioPlayer.bind(this);
+    _resetActiveAudioPlayer() {
+      this.setState({
+        activeAudioPlayerID: -1
+      });
     }
 
     _playButtonClickHandler(audioPlayerID) {
@@ -20,19 +23,15 @@ const withAudioPlayer = (WrappedComponent) => {
       }));
     }
 
-    _renderAudioPlayer(song, audioPlayerID) {
+    _renderAudioPlayer(source, audioPlayerID) {
       const {activeAudioPlayerID} = this.state;
 
       return (
-        <div className="game__track">
-          <div className="track">
-            <AudioPlayer
-              src={song.src}
-              isPlaying={audioPlayerID === activeAudioPlayerID}
-              onPlayButtonClick={this._playButtonClickHandler}
-            />
-          </div>
-        </div>
+        <AudioPlayer
+          src={source}
+          isPlaying={audioPlayerID === activeAudioPlayerID}
+          onPlayButtonClick={() => this._playButtonClickHandler(audioPlayerID)}
+        />
       );
     }
 
@@ -40,7 +39,8 @@ const withAudioPlayer = (WrappedComponent) => {
       return (
         <WrappedComponent
           {...this.props}
-          renderAudioPlayer={this._renderAudioPlayer}
+          renderAudioPlayer={(source, audioPlayerID) => this._renderAudioPlayer(source, audioPlayerID)}
+          resetActiveAudioPlayer={() => this._resetActiveAudioPlayer()}
         />
       );
     }

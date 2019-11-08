@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import GameHeader from "../game-header/game-header.jsx";
-import AudioPlayer from "../audio-player/audio-player.jsx";
 
 class QuestionArtistScreen extends React.PureComponent {
   constructor(props) {
@@ -15,12 +14,6 @@ class QuestionArtistScreen extends React.PureComponent {
     onAnswerClick(artist);
   }
 
-  // _answersChangeHandler() {
-  //   this.setState({
-  //     activeAudioPlayerID: -1,
-  //   });
-  // }
-
   render() {
     const {
       question: {
@@ -28,7 +21,8 @@ class QuestionArtistScreen extends React.PureComponent {
         song,
         answers,
       },
-      renderAudioPlayer
+      renderAudioPlayer,
+      resetActiveAudioPlayer
     } = this.props;
 
     return (
@@ -37,11 +31,12 @@ class QuestionArtistScreen extends React.PureComponent {
 
         <section className="game__screen">
           <h2 className="game__title">Кто исполняет эту песню?</h2>
-
-          {renderAudioPlayer(song, this._audioPlayerID)}
-
-          <form className="game__artist" onChange={() => this._answersChangeHandler()}>
-
+          <div className="game__track">
+            <div className="track">
+              {renderAudioPlayer(song.src, this._audioPlayerID)}
+            </div>
+          </div>
+          <form className="game__artist" onChange={resetActiveAudioPlayer}>
             {answers.map((answer, index) => (
               <div className="artist" key={`${id}-${index}-answer`}>
                 <input onChange={() => this._answerChangeHandler(answer.artist)} className="artist__input visually-hidden" type="radio" name="answer" value={answer.artist}
@@ -52,7 +47,6 @@ class QuestionArtistScreen extends React.PureComponent {
                 </label>
               </div>
             ))}
-
           </form>
         </section>
       </section>
@@ -76,6 +70,7 @@ QuestionArtistScreen.propTypes = {
     ),
   }),
   renderAudioPlayer: PropTypes.func.isRequired,
+  resetActiveAudioPlayer: PropTypes.func.isRequired,
   onAnswerClick: PropTypes.func.isRequired
 };
 
