@@ -7,15 +7,7 @@ class QuestionArtistScreen extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    this.state = {
-      activeAudioPlayerID: -1,
-    };
-  }
-
-  _playButtonClickHandler(audioPlayerID) {
-    this.setState((prevState) => ({
-      activeAudioPlayerID: prevState.activeAudioPlayerID === audioPlayerID ? -1 : audioPlayerID
-    }));
+    this._audioPlayerID = 0;
   }
 
   _answerChangeHandler(artist) {
@@ -23,11 +15,11 @@ class QuestionArtistScreen extends React.PureComponent {
     onAnswerClick(artist);
   }
 
-  _answersChangeHandler() {
-    this.setState({
-      activeAudioPlayerID: -1,
-    });
-  }
+  // _answersChangeHandler() {
+  //   this.setState({
+  //     activeAudioPlayerID: -1,
+  //   });
+  // }
 
   render() {
     const {
@@ -35,10 +27,9 @@ class QuestionArtistScreen extends React.PureComponent {
         id,
         song,
         answers,
-      }
+      },
+      renderAudioPlayer
     } = this.props;
-    const {activeAudioPlayerID} = this.state;
-    const titleAudioPlayer = 0;
 
     return (
       <section className="game game--artist">
@@ -46,15 +37,8 @@ class QuestionArtistScreen extends React.PureComponent {
 
         <section className="game__screen">
           <h2 className="game__title">Кто исполняет эту песню?</h2>
-          <div className="game__track">
-            <div className="track">
-              <AudioPlayer
-                isPlaying={titleAudioPlayer === activeAudioPlayerID}
-                src={song.src}
-                onPlayButtonClick={() => this._playButtonClickHandler(titleAudioPlayer)}
-              />
-            </div>
-          </div>
+
+          {renderAudioPlayer(song, this._audioPlayerID)}
 
           <form className="game__artist" onChange={() => this._answersChangeHandler()}>
 
@@ -91,6 +75,7 @@ QuestionArtistScreen.propTypes = {
         })
     ),
   }),
+  renderAudioPlayer: PropTypes.func.isRequired,
   onAnswerClick: PropTypes.func.isRequired
 };
 
