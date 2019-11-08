@@ -12,6 +12,7 @@ import Timer from "../../utils/timer/timer.js";
 import withAudioPlayer from "../../hocs/withAudioPlayer/withAudioPlayer.jsx";
 
 const QuestionArtistScreenWrapped = withAudioPlayer(QuestionArtistScreen);
+const QuestionGenreScreenWrapped = withAudioPlayer(QuestionGenreScreen);
 
 class App extends React.Component {
   shouldComponentUpdate(nextProps) {
@@ -61,7 +62,7 @@ class App extends React.Component {
     switch (question.type) {
       case `genre`:
         return (
-          <QuestionGenreScreen
+          <QuestionGenreScreenWrapped
             question={question}
             onAnswerClick={(userChoice) => onUserAnswerClick(userChoice, question, mistakes, maxMistakes, step, maxSteps)}
           />

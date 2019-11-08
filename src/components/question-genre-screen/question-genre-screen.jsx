@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import GameHeader from "../game-header/game-header.jsx";
-import AudioPlayer from "../audio-player/audio-player.jsx";
 import AnswerCheckbox from "../answer-checkbox/answer-checkbox.jsx";
 
 class QuestionGenreScreen extends React.PureComponent {
@@ -11,15 +10,8 @@ class QuestionGenreScreen extends React.PureComponent {
     this._answersAmount = props.question.answers.length;
 
     this.state = {
-      activeAudioPlayerID: -1,
       userAnswers: new Array(this._answersAmount).fill(false)
     };
-  }
-
-  _playButtonClickHandler(audioPlayerID) {
-    this.setState((prevState) => ({
-      activeAudioPlayerID: prevState.activeAudioPlayerID === audioPlayerID ? -1 : audioPlayerID
-    }));
   }
 
   _answerChangeHandler(checkboxIndex) {
@@ -41,7 +33,6 @@ class QuestionGenreScreen extends React.PureComponent {
     onAnswerClick(userAnswers);
 
     this.setState({
-      activeAudioPlayerID: -1,
       onAnswerClick: new Array(this._answersAmount).fill(false)
     });
   }
@@ -52,10 +43,11 @@ class QuestionGenreScreen extends React.PureComponent {
         id: quesID,
         genre,
         answers,
-      }
+      },
+      renderAudioPlayer,
+      resetActiveAudioPlayer
     } = this.props;
 
-    const {activeAudioPlayerID} = this.state;
 
     return (
       <section className="game game--genre">
@@ -63,15 +55,13 @@ class QuestionGenreScreen extends React.PureComponent {
 
         <section className="game__screen">
           <h2 className="game__title">Выберите {genre} треки</h2>
-          <form className="game__tracks" onSubmit={(evt) => this._answersSubmitHandler(evt)}>
-
+          <form className="game__tracks" onSubmit={(evt) => {
+            this._answersSubmitHandler(evt);
+            resetActiveAudioPlayer();
+          }}>
             {answers.map((answer, index) => (
               <div className="track" key={`${quesID}-${index}-answer`}>
-                <AudioPlayer
-                  isPlaying={index === activeAudioPlayerID}
-                  src={answer.src}
-                  onPlayButtonClick={() => this._playButtonClickHandler(index)}
-                />
+                {renderAudioPlayer(answer.src, index)}
                 <div className="game__answer">
                   <AnswerCheckbox
                     id={index}
@@ -82,7 +72,6 @@ class QuestionGenreScreen extends React.PureComponent {
                 </div>
               </div>
             ))}
-
             <button className="game__submit button" type="submit">Ответить</button>
           </form>
         </section>
@@ -103,7 +92,9 @@ QuestionGenreScreen.propTypes = {
         })
     )
   }),
-  onAnswerClick: PropTypes.func.isRequired
+  onAnswerClick: PropTypes.func.isRequired,
+  renderAudioPlayer: PropTypes.func.isRequired,
+  resetActiveAudioPlayer: PropTypes.func.isRequired
 };
 
 export default QuestionGenreScreen;
