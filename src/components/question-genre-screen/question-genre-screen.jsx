@@ -1,40 +1,30 @@
 import React from "react";
 import PropTypes from "prop-types";
 import GameHeader from "../game-header/game-header.jsx";
-import AnswerCheckbox from "../answer-checkbox/answer-checkbox.jsx";
 
 class QuestionGenreScreen extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    this._answersAmount = props.question.answers.length;
-
-    this.state = {
-      userAnswers: new Array(this._answersAmount).fill(false)
-    };
+    this._answerChangeHandler = this._answerChangeHandler.bind(this);
+    this._answersSubmitHandler = this._answersSubmitHandler.bind(this);
   }
 
-  _answerChangeHandler(checkboxIndex) {
-    this.setState((prevState) => {
-      const newUserAnswers = [...prevState.userAnswers];
-      newUserAnswers[checkboxIndex] = !newUserAnswers[checkboxIndex];
+  _answerChangeHandler(evt) {
+    const {registerUserAnswer} = this.props;
+    const targetId = evt.target.id;
+    const answerIndex = Number(targetId.slice(targetId.lastIndexOf(`-`) - targetId.length + 1));
 
-      return {
-        userAnswers: newUserAnswers
-      };
-    });
+    registerUserAnswer(answerIndex);
   }
 
   _answersSubmitHandler(evt) {
     evt.preventDefault();
-    const {onAnswerClick} = this.props;
-    const {userAnswers} = this.state;
+    const {onAnswerClick, userAnswers, resetActiveAudioPlayer, resetUserAnswers} = this.props;
 
     onAnswerClick(userAnswers);
-
-    this.setState({
-      onAnswerClick: new Array(this._answersAmount).fill(false)
-    });
+    resetActiveAudioPlayer();
+    resetUserAnswers();
   }
 
   render() {
@@ -45,7 +35,7 @@ class QuestionGenreScreen extends React.PureComponent {
         answers,
       },
       renderAudioPlayer,
-      resetActiveAudioPlayer
+      userAnswers,
     } = this.props;
 
 
@@ -55,20 +45,14 @@ class QuestionGenreScreen extends React.PureComponent {
 
         <section className="game__screen">
           <h2 className="game__title">Выберите {genre} треки</h2>
-          <form className="game__tracks" onSubmit={(evt) => {
-            this._answersSubmitHandler(evt);
-            resetActiveAudioPlayer();
-          }}>
+          <form className="game__tracks" onSubmit={this._answersSubmitHandler}>
             {answers.map((answer, index) => (
               <div className="track" key={`${quesID}-${index}-answer`}>
                 {renderAudioPlayer(answer.src, index)}
                 <div className="game__answer">
-                  <AnswerCheckbox
-                    id={index}
-                    value={answer.genre}
-                    checked={false}
-                    onChange={() => this._answerChangeHandler(index)}
-                  />
+                  <input type="checkbox" className="game__input visually-hidden" name="answer" id={`answer-${index}`}
+                    value={answer.genre} checked={userAnswers[index]} onChange={this._answerChangeHandler}/>
+                  <label className="game__check" htmlFor={`answer-${index}`}>Отметить</label>
                 </div>
               </div>
             ))}
@@ -93,6 +77,9 @@ QuestionGenreScreen.propTypes = {
     )
   }),
   onAnswerClick: PropTypes.func.isRequired,
+  userAnswers: PropTypes.arrayOf(PropTypes.bool).isRequired,
+  registerUserAnswer: PropTypes.func.isRequired,
+  resetUserAnswers: PropTypes.func.isRequired,
   renderAudioPlayer: PropTypes.func.isRequired,
   resetActiveAudioPlayer: PropTypes.func.isRequired
 };
