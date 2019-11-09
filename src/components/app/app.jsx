@@ -9,10 +9,11 @@ import GameOverScreen from "../game-over-screen/game-over-screen.jsx";
 import {ActionCreator} from "../../reducer/reducer.js";
 import {Time} from "../../utils/time/time.js";
 import Timer from "../../utils/timer/timer.js";
-import withAudioPlayer from "../../hocs/withAudioPlayer/withAudioPlayer.jsx";
+import withActivePlayer from "../../hocs/with-active-player/with-active-player.jsx";
+import withUserAnswers from "../../hocs/with-user-answers/with-user-answers.jsx";
 
-const QuestionArtistScreenWrapped = withAudioPlayer(QuestionArtistScreen);
-const QuestionGenreScreenWrapped = withAudioPlayer(QuestionGenreScreen);
+const QuestionArtistScreenWrapped = withActivePlayer(QuestionArtistScreen);
+const QuestionGenreScreenWrapped = withActivePlayer(withUserAnswers(QuestionGenreScreen));
 
 class App extends React.Component {
   shouldComponentUpdate(nextProps) {
