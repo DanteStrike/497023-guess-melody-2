@@ -5,7 +5,7 @@ import withUserAnswers from "./with-user-answers";
 
 Enzyme.configure({adapter: new Adapter()});
 
-describe(`HoC withPlayPlayer should work correctly`, () => {
+describe(`HoC withUserAnswers should work correctly`, () => {
   let component;
   const MockComponent = () => <div/>;
   const MockComponentWrapped = withUserAnswers(MockComponent);
