@@ -1,17 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Should render correctly AudioPlayer component 1`] = `
-Array [
-  <button
-    className="track__button track__button--play"
-    disabled={true}
-    onClick={[Function]}
-    type="button"
-  />,
-  <div
-    className="track__status"
-  >
-    <audio />
-  </div>,
-]
+<div
+  className="track__status"
+>
+  <audio
+    src="http://dl2.mp3party.net/online/9116246.mp3"
+  />
+</div>
 `;

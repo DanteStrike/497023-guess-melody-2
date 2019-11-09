@@ -26,13 +26,12 @@ it(`Should return user answers correctly on input change`, () => {
       <QuestionArtistScreen
         question={questionMock}
         onAnswerClick={onAnswerClickMock}
+        renderAudioPlayer={jest.fn()}
+        resetActiveAudioPlayer={jest.fn()}
       />
   );
 
   const artistQuestionInput = component.find(`#answer-0`);
-  artistQuestionInput.simulate(`change`);
-
-  const artistQuestionForm = component.find(`form.game__artist`);
-  artistQuestionForm.simulate(`change`);
+  artistQuestionInput.simulate(`change`, {target: {value: `Plаcido Domingo`}});
   expect(onAnswerClickMock.mock.calls[0][0]).toEqual(`Plаcido Domingo`);
 });

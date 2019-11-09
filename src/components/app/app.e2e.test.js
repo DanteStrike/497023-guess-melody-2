@@ -10,8 +10,6 @@ jest.useFakeTimers();
 
 Enzyme.configure({adapter: new Adapter()});
 
-HTMLAudioElement.prototype.pause = () => { /* do nothing */ };
-
 describe(`APP screens should switch`, () => {
   it(`Should switch welcome screen to first question on start game button click`, () => {
     const store = createStore(reducer);

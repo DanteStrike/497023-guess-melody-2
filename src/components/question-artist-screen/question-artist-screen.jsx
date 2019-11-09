@@ -11,8 +11,9 @@ class QuestionArtistScreen extends React.PureComponent {
     this._answerChangeHandler = this._answerChangeHandler.bind(this);
   }
 
-  _answerChangeHandler(artist) {
+  _answerChangeHandler(evt) {
     const {onAnswerClick} = this.props;
+    const artist = evt.target.value;
     onAnswerClick(artist);
   }
 
@@ -42,7 +43,7 @@ class QuestionArtistScreen extends React.PureComponent {
             {answers.map((answer, index) => (
               <div className="artist" key={`${id}-${index}-answer`}>
                 <input className="artist__input visually-hidden" type="radio" name="answer" value={answer.artist}
-                  id={`answer-${index}`} onChange={this._answerChangeHandler(answer.artist)}/>
+                  id={`answer-${index}`} onChange={this._answerChangeHandler}/>
                 <label className="artist__name" htmlFor={`answer-${index}`}>
                   <img className="artist__picture" src={answer.image} alt={answer.artist}/>
                   {answer.artist}

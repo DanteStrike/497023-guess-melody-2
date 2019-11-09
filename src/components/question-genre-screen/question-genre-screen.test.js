@@ -40,18 +40,13 @@ it(`render correctly QuestionGenreScreen component`, () => {
           <QuestionGenreScreen
             question={questionMock}
             onAnswerClick={jest.fn()}
+            userAnswers={[false, false, false, false]}
+            registerUserAnswer={jest.fn()}
+            resetUserAnswers={jest.fn()}
+            renderAudioPlayer={jest.fn()}
+            resetActiveAudioPlayer={jest.fn()}
           />
-        </Provider>,
-        {
-          createNodeMock: (element) => {
-            if (element.type === `audio`) {
-              return {
-                src: null
-              };
-            }
-            return null;
-          }
-        }
+        </Provider>
     )
     .toJSON();
 
