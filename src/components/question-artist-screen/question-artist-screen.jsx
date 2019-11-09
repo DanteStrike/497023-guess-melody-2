@@ -7,6 +7,8 @@ class QuestionArtistScreen extends React.PureComponent {
     super(props);
 
     this._audioPlayerID = 0;
+
+    this._answerChangeHandler = this._answerChangeHandler.bind(this);
   }
 
   _answerChangeHandler(artist) {
@@ -39,8 +41,8 @@ class QuestionArtistScreen extends React.PureComponent {
           <form className="game__artist" onChange={resetActiveAudioPlayer}>
             {answers.map((answer, index) => (
               <div className="artist" key={`${id}-${index}-answer`}>
-                <input onChange={() => this._answerChangeHandler(answer.artist)} className="artist__input visually-hidden" type="radio" name="answer" value={answer.artist}
-                  id={`answer-${index}`}/>
+                <input className="artist__input visually-hidden" type="radio" name="answer" value={answer.artist}
+                  id={`answer-${index}`} onChange={this._answerChangeHandler(answer.artist)}/>
                 <label className="artist__name" htmlFor={`answer-${index}`}>
                   <img className="artist__picture" src={answer.image} alt={answer.artist}/>
                   {answer.artist}
