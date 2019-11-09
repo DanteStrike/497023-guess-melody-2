@@ -1,14 +1,20 @@
 import React from "react";
 import AudioPlayer from "../../components/audio-player/audio-player.jsx";
+import withPlayButton from "../with-play-button/with-play-button.jsx";
 
-const withAudioPlayer = (WrappedComponent) => {
-  return class WithAudioPlayer extends React.PureComponent {
+const WrappedAudioPlayer = withPlayButton(AudioPlayer);
+
+const withActivePlayer = (WrappedComponent) => {
+  class WithAudioPlayer extends React.PureComponent {
     constructor(props) {
       super(props);
 
       this.state = {
         activeAudioPlayerID: -1
       };
+
+      this._resetActiveAudioPlayer = this._resetActiveAudioPlayer.bind(this);
+      this._playButtonClickHandler = this._playButtonClickHandler.bind(this);
     }
 
     _resetActiveAudioPlayer() {
@@ -27,10 +33,11 @@ const withAudioPlayer = (WrappedComponent) => {
       const {activeAudioPlayerID} = this.state;
 
       return (
-        <AudioPlayer
+        <WrappedAudioPlayer
+          id={audioPlayerID}
           src={source}
           isActivePlayer={audioPlayerID === activeAudioPlayerID}
-          onPlayButtonClick={() => this._playButtonClickHandler(audioPlayerID)}
+          onPlayButtonClick={this._playButtonClickHandler}
         />
       );
     }
@@ -40,11 +47,15 @@ const withAudioPlayer = (WrappedComponent) => {
         <WrappedComponent
           {...this.props}
           renderAudioPlayer={(source, audioPlayerID) => this._renderAudioPlayer(source, audioPlayerID)}
-          resetActiveAudioPlayer={() => this._resetActiveAudioPlayer()}
+          resetActiveAudioPlayer={this._resetActiveAudioPlayer}
         />
       );
     }
-  };
+  }
+
+  WithAudioPlayer.propTypes = {};
+
+  return WithAudioPlayer;
 };
 
-export default withAudioPlayer;
+export default withActivePlayer;
