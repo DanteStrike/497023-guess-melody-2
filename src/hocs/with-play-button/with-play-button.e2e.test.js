@@ -41,8 +41,8 @@ describe(`HoC withPlayButton should work correctly`, () => {
   });
 
   it(`Should correct add EventListener and remove EventListener`, () => {
-    expect(addEventListenerMock).toBeCalledTimes(3);
     component.unmount();
+    expect(addEventListenerMock).toBeCalledTimes(3);
     expect(removeEventListenerMock).toBeCalledTimes(3);
     expect(eventsMock).toEqual({});
   });
