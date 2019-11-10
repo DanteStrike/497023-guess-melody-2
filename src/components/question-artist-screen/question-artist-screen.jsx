@@ -1,32 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
 import GameHeader from "../game-header/game-header.jsx";
-import AudioPlayer from "../audio-player/audio-player.jsx";
 
 class QuestionArtistScreen extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    this.state = {
-      activeAudioPlayerID: -1,
-    };
+    this._audioPlayerID = 0;
+
+    this._answerChangeHandler = this._answerChangeHandler.bind(this);
   }
 
-  _playButtonClickHandler(audioPlayerID) {
-    this.setState((prevState) => ({
-      activeAudioPlayerID: prevState.activeAudioPlayerID === audioPlayerID ? -1 : audioPlayerID
-    }));
-  }
-
-  _answerChangeHandler(artist) {
+  _answerChangeHandler(evt) {
     const {onAnswerClick} = this.props;
+    const artist = evt.target.value;
     onAnswerClick(artist);
-  }
-
-  _answersChangeHandler() {
-    this.setState({
-      activeAudioPlayerID: -1,
-    });
   }
 
   render() {
@@ -35,10 +23,10 @@ class QuestionArtistScreen extends React.PureComponent {
         id,
         song,
         answers,
-      }
+      },
+      renderAudioPlayer,
+      resetActiveAudioPlayer
     } = this.props;
-    const {activeAudioPlayerID} = this.state;
-    const titleAudioPlayer = 0;
 
     return (
       <section className="game game--artist">
@@ -48,27 +36,20 @@ class QuestionArtistScreen extends React.PureComponent {
           <h2 className="game__title">Кто исполняет эту песню?</h2>
           <div className="game__track">
             <div className="track">
-              <AudioPlayer
-                isPlaying={titleAudioPlayer === activeAudioPlayerID}
-                src={song.src}
-                onPlayButtonClick={() => this._playButtonClickHandler(titleAudioPlayer)}
-              />
+              {renderAudioPlayer(song.src, this._audioPlayerID)}
             </div>
           </div>
-
-          <form className="game__artist" onChange={() => this._answersChangeHandler()}>
-
+          <form className="game__artist" onChange={resetActiveAudioPlayer}>
             {answers.map((answer, index) => (
               <div className="artist" key={`${id}-${index}-answer`}>
-                <input onChange={() => this._answerChangeHandler(answer.artist)} className="artist__input visually-hidden" type="radio" name="answer" value={answer.artist}
-                  id={`answer-${index}`}/>
+                <input className="artist__input visually-hidden" type="radio" name="answer" value={answer.artist}
+                  id={`answer-${index}`} onChange={this._answerChangeHandler}/>
                 <label className="artist__name" htmlFor={`answer-${index}`}>
                   <img className="artist__picture" src={answer.image} alt={answer.artist}/>
                   {answer.artist}
                 </label>
               </div>
             ))}
-
           </form>
         </section>
       </section>
@@ -91,6 +72,8 @@ QuestionArtistScreen.propTypes = {
         })
     ),
   }),
+  renderAudioPlayer: PropTypes.func.isRequired,
+  resetActiveAudioPlayer: PropTypes.func.isRequired,
   onAnswerClick: PropTypes.func.isRequired
 };
 

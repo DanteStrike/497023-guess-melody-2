@@ -1,49 +1,30 @@
 import React from "react";
 import PropTypes from "prop-types";
 import GameHeader from "../game-header/game-header.jsx";
-import AudioPlayer from "../audio-player/audio-player.jsx";
-import AnswerCheckbox from "../answer-checkbox/answer-checkbox.jsx";
 
 class QuestionGenreScreen extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    this._answersAmount = props.question.answers.length;
-
-    this.state = {
-      activeAudioPlayerID: -1,
-      userAnswers: new Array(this._answersAmount).fill(false)
-    };
+    this._answerChangeHandler = this._answerChangeHandler.bind(this);
+    this._answersSubmitHandler = this._answersSubmitHandler.bind(this);
   }
 
-  _playButtonClickHandler(audioPlayerID) {
-    this.setState((prevState) => ({
-      activeAudioPlayerID: prevState.activeAudioPlayerID === audioPlayerID ? -1 : audioPlayerID
-    }));
-  }
+  _answerChangeHandler(evt) {
+    const {registerUserAnswer} = this.props;
+    const targetId = evt.target.id;
+    const answerIndex = Number(targetId.slice(targetId.lastIndexOf(`-`) - targetId.length + 1));
 
-  _answerChangeHandler(checkboxIndex) {
-    this.setState((prevState) => {
-      const newUserAnswers = [...prevState.userAnswers];
-      newUserAnswers[checkboxIndex] = !newUserAnswers[checkboxIndex];
-
-      return {
-        userAnswers: newUserAnswers
-      };
-    });
+    registerUserAnswer(answerIndex);
   }
 
   _answersSubmitHandler(evt) {
     evt.preventDefault();
-    const {onAnswerClick} = this.props;
-    const {userAnswers} = this.state;
+    const {onAnswerClick, userAnswers, resetActiveAudioPlayer, resetUserAnswers} = this.props;
 
     onAnswerClick(userAnswers);
-
-    this.setState({
-      activeAudioPlayerID: -1,
-      onAnswerClick: new Array(this._answersAmount).fill(false)
-    });
+    resetActiveAudioPlayer();
+    resetUserAnswers();
   }
 
   render() {
@@ -52,10 +33,11 @@ class QuestionGenreScreen extends React.PureComponent {
         id: quesID,
         genre,
         answers,
-      }
+      },
+      renderAudioPlayer,
+      userAnswers,
     } = this.props;
 
-    const {activeAudioPlayerID} = this.state;
 
     return (
       <section className="game game--genre">
@@ -63,26 +45,17 @@ class QuestionGenreScreen extends React.PureComponent {
 
         <section className="game__screen">
           <h2 className="game__title">Выберите {genre} треки</h2>
-          <form className="game__tracks" onSubmit={(evt) => this._answersSubmitHandler(evt)}>
-
+          <form className="game__tracks" onSubmit={this._answersSubmitHandler}>
             {answers.map((answer, index) => (
               <div className="track" key={`${quesID}-${index}-answer`}>
-                <AudioPlayer
-                  isPlaying={index === activeAudioPlayerID}
-                  src={answer.src}
-                  onPlayButtonClick={() => this._playButtonClickHandler(index)}
-                />
+                {renderAudioPlayer(answer.src, index)}
                 <div className="game__answer">
-                  <AnswerCheckbox
-                    id={index}
-                    value={answer.genre}
-                    checked={false}
-                    onChange={() => this._answerChangeHandler(index)}
-                  />
+                  <input type="checkbox" className="game__input visually-hidden" name="answer" id={`answer-${index}`}
+                    value={answer.genre} checked={userAnswers[index]} onChange={this._answerChangeHandler}/>
+                  <label className="game__check" htmlFor={`answer-${index}`}>Отметить</label>
                 </div>
               </div>
             ))}
-
             <button className="game__submit button" type="submit">Ответить</button>
           </form>
         </section>
@@ -103,7 +76,12 @@ QuestionGenreScreen.propTypes = {
         })
     )
   }),
-  onAnswerClick: PropTypes.func.isRequired
+  onAnswerClick: PropTypes.func.isRequired,
+  userAnswers: PropTypes.arrayOf(PropTypes.bool).isRequired,
+  registerUserAnswer: PropTypes.func.isRequired,
+  resetUserAnswers: PropTypes.func.isRequired,
+  renderAudioPlayer: PropTypes.func.isRequired,
+  resetActiveAudioPlayer: PropTypes.func.isRequired
 };
 
 export default QuestionGenreScreen;

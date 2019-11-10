@@ -6,20 +6,11 @@ it(`Should render correctly AudioPlayer component`, () => {
   const component = renderer
     .create(
         <AudioPlayer
-          isPlaying={false}
+          isActivePlayer={false}
           src={`http://dl2.mp3party.net/online/9116246.mp3`}
-          onPlayButtonClick={() => {}}
-        />,
-        {
-          createNodeMock: (element) => {
-            if (element.type === `audio`) {
-              return {
-                src: null
-              };
-            }
-            return null;
-          }
-        }
+          renderPlayButton={jest.fn()}
+          audioRef={jest.fn()}
+        />
     ).toJSON();
 
   expect(component).toMatchSnapshot();

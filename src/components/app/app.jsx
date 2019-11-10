@@ -9,8 +9,18 @@ import GameOverScreen from "../game-over-screen/game-over-screen.jsx";
 import {ActionCreator} from "../../reducer/reducer.js";
 import {Time} from "../../utils/time/time.js";
 import Timer from "../../utils/timer/timer.js";
+import withActivePlayer from "../../hocs/with-active-player/with-active-player.jsx";
+import withUserAnswers from "../../hocs/with-user-answers/with-user-answers.jsx";
 
-class App extends React.PureComponent {
+const QuestionArtistScreenWrapped = withActivePlayer(QuestionArtistScreen);
+const QuestionGenreScreenWrapped = withActivePlayer(withUserAnswers(QuestionGenreScreen));
+
+class App extends React.Component {
+  shouldComponentUpdate(nextProps) {
+    const {step, mistakes} = this.props;
+    return step !== nextProps.step || mistakes !== nextProps.mistakes || nextProps.gameTimeRemaining === 0;
+  }
+
   _getScreen() {
     const {questions, step, gameTimeMinutes, gameTimeRemaining, mistakes, maxMistakes, onGameResetClick} = this.props;
     const gameTimestamp = gameTimeMinutes * Time.MILLISECONDS_IN_MINUTE;
@@ -53,7 +63,7 @@ class App extends React.PureComponent {
     switch (question.type) {
       case `genre`:
         return (
-          <QuestionGenreScreen
+          <QuestionGenreScreenWrapped
             question={question}
             onAnswerClick={(userChoice) => onUserAnswerClick(userChoice, question, mistakes, maxMistakes, step, maxSteps)}
           />
@@ -61,7 +71,7 @@ class App extends React.PureComponent {
 
       case `artist`:
         return (
-          <QuestionArtistScreen
+          <QuestionArtistScreenWrapped
             question={question}
             onAnswerClick={(userChoice) => onUserAnswerClick(userChoice, question, mistakes, maxMistakes, step, maxSteps)}
           />
