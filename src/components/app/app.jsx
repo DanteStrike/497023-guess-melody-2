@@ -1,19 +1,23 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
+import {ActionCreator} from "../../reducer/reducer.js";
+import {Time} from "../../utils/time/time.js";
+import Timer from "../../utils/timer/timer.js";
+import {compose} from "recompose";
 import WelcomeScreen from "../welcome-screen/welcome-screen.jsx";
 import QuestionGenreScreen from "../question-genre-screen/question-genre-screen.jsx";
 import QuestionArtistScreen from "../question-artist-screen/question-artist-screen.jsx";
 import WinScreen from "../win-screen/win-screen.jsx";
 import GameOverScreen from "../game-over-screen/game-over-screen.jsx";
-import {ActionCreator} from "../../reducer/reducer.js";
-import {Time} from "../../utils/time/time.js";
-import Timer from "../../utils/timer/timer.js";
 import withActivePlayer from "../../hocs/with-active-player/with-active-player.jsx";
 import withUserAnswers from "../../hocs/with-user-answers/with-user-answers.jsx";
 
 const QuestionArtistScreenWrapped = withActivePlayer(QuestionArtistScreen);
-const QuestionGenreScreenWrapped = withActivePlayer(withUserAnswers(QuestionGenreScreen));
+const QuestionGenreScreenWrapped = compose(
+    withActivePlayer,
+    withUserAnswers
+)(QuestionGenreScreen);
 
 class App extends React.Component {
   shouldComponentUpdate(nextProps) {
