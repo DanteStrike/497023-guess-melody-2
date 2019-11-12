@@ -96,18 +96,18 @@ App.propTypes = {
   maxMistakes: PropTypes.number.isRequired,
   questions: PropTypes.arrayOf(PropTypes.oneOfType([
     PropTypes.exact({
-      id: PropTypes.number.isRequired,
+      // id: PropTypes.number.isRequired,
       type: PropTypes.oneOf([`genre`]),
-      genre: PropTypes.oneOf([`jazz`, `rock`, `pop`]),
+      genre: PropTypes.string.isRequired,
       answers: PropTypes.arrayOf(
           PropTypes.exact({
             src: PropTypes.string.isRequired,
-            genre: PropTypes.oneOf([`jazz`, `rock`, `pop`])
+            genre: PropTypes.string.isRequired
           })
       )
     }),
     PropTypes.exact({
-      id: PropTypes.number.isRequired,
+      // id: PropTypes.number.isRequired,
       type: PropTypes.oneOf([`artist`]),
       song: PropTypes.exact({
         artist: PropTypes.string.isRequired,
@@ -116,7 +116,7 @@ App.propTypes = {
       answers: PropTypes.arrayOf(
           PropTypes.exact({
             artist: PropTypes.string.isRequired,
-            image: PropTypes.string.isRequired
+            picture: PropTypes.string.isRequired
           })
       )
     })
@@ -132,7 +132,8 @@ App.propTypes = {
 const mapStateToProps = (state) => ({
   gameTimeRemaining: state.gameTimeRemaining,
   step: state.step,
-  mistakes: state.mistakes
+  mistakes: state.mistakes,
+  questions: state.questions
 });
 
 const mapDispatchToProps = (dispatch) => {
