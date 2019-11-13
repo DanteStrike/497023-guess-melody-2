@@ -15,6 +15,7 @@ const init = () => {
     errorAmount: 2
   };
 
+const init = (settings) => {
   const api = configureAPI((...args) => store.dispatch(...args));
 
   const store = createStore(
@@ -38,4 +39,4 @@ const init = () => {
   );
 };
 
-init();
+init(gameSettings);
