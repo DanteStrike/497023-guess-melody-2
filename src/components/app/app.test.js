@@ -5,10 +5,19 @@ import App from "./app.jsx";
 import {Provider} from "react-redux";
 import {createStore} from "redux";
 
-const store = createStore(() => ({
+const gameState = {
   step: -1,
   mistakes: 0,
   gameTimeRemaining: 0
+};
+
+const questionsState = {
+  questions
+};
+
+const store = createStore(() => ({
+  game: gameState,
+  questions: questionsState
 }));
 
 it(`render correctly App component`, () => {
@@ -18,7 +27,6 @@ it(`render correctly App component`, () => {
           <App
             gameTimeMinutes={1}
             maxMistakes={1}
-            questions={questions}
             onUserAnswerClick={jest.fn}
             onWelcomeScreenClick={jest.fn}
             onGameResetClick={jest.fn}

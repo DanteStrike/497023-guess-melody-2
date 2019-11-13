@@ -4,9 +4,13 @@ import GameHeader from "./game-header.jsx";
 import {Provider} from "react-redux";
 import {createStore} from "redux";
 
-const store = createStore(() => ({
+const gameState = {
   mistakes: 0,
   gameTimeRemaining: 0
+};
+
+const store = createStore(() => ({
+  game: gameState
 }));
 
 it(`render correctly GameHeader component`, () => {

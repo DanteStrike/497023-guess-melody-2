@@ -4,32 +4,35 @@ import QuestionGenreScreen from "./question-genre-screen.jsx";
 import {Provider} from "react-redux";
 import {createStore} from "redux";
 
-const store = createStore(() => ({
+const gameStore = {
   mistakes: 0,
   gameTimeRemaining: 0
+};
+
+const store = createStore(() => ({
+  game: gameStore
 }));
 
 it(`render correctly QuestionGenreScreen component`, () => {
   const questionMock = {
-    id: 1,
     type: `genre`,
-    genre: `jazz`,
+    genre: `any`,
     answers: [
       {
-        src: ``,
-        genre: `rock`
+        src: `any`,
+        genre: `any`
       },
       {
-        src: ``,
-        genre: `rock`
+        src: `any`,
+        genre: `any`
       },
       {
-        src: ``,
-        genre: `pop`
+        src: `any`,
+        genre: `any`
       },
       {
-        src: ``,
-        genre: `jazz`
+        src: `any`,
+        genre: `any`
       },
     ]
   };
@@ -38,6 +41,7 @@ it(`render correctly QuestionGenreScreen component`, () => {
     .create(
         <Provider store={store}>
           <QuestionGenreScreen
+            id={1}
             question={questionMock}
             onAnswerClick={jest.fn()}
             userAnswers={[false, false, false, false]}

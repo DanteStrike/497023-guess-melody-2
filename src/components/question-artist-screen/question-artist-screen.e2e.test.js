@@ -7,15 +7,14 @@ Enzyme.configure({adapter: new Adapter()});
 
 it(`Should return user answers correctly on input change`, () => {
   const questionMock = {
-    id: 1,
     song: {
-      artist: `Plаcido Domingo`,
-      src: ``
+      artist: `any`,
+      src: `any`
     },
     answers: [
       {
         artist: `Plаcido Domingo`,
-        image: ``
+        picture: `any`
       },
     ]
   };
@@ -24,6 +23,7 @@ it(`Should return user answers correctly on input change`, () => {
 
   const component = shallow(
       <QuestionArtistScreen
+        id={1}
         question={questionMock}
         onAnswerClick={onAnswerClickMock}
         renderAudioPlayer={jest.fn()}

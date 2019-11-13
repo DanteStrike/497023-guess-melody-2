@@ -1,6 +1,5 @@
 export const questions = [
   {
-    id: 1,
     type: `genre`,
     genre: `rock`,
     answers: [
@@ -23,7 +22,6 @@ export const questions = [
     ]
   },
   {
-    id: 2,
     type: `genre`,
     genre: `jazz`,
     answers: [
@@ -46,7 +44,6 @@ export const questions = [
     ]
   },
   {
-    id: 3,
     type: `artist`,
     song: {
       artist: `Plаcido Domingo`,
@@ -55,20 +52,19 @@ export const questions = [
     answers: [
       {
         artist: `Luciano Pavarotti`,
-        image: `http://placehold.it/134x134`
+        picture: `http://placehold.it/134x134`
       },
       {
         artist: `Plаcido Domingo`,
-        image: `http://placehold.it/134x134`
+        picture: `http://placehold.it/134x134`
       },
       {
         artist: `Jose Carreras`,
-        image: `http://placehold.it/134x134`
+        picture: `http://placehold.it/134x134`
       }
     ]
   },
   {
-    id: 4,
     type: `artist`,
     song: {
       artist: `Luciano Pavarotti`,
@@ -77,15 +73,15 @@ export const questions = [
     answers: [
       {
         artist: `Plаcido Domingo`,
-        image: `http://placehold.it/134x134`
+        picture: `http://placehold.it/134x134`
       },
       {
         artist: `Jose Carreras`,
-        image: `http://placehold.it/134x134`
+        picture: `http://placehold.it/134x134`
       },
       {
         artist: `Luciano Pavarotti`,
-        image: `http://placehold.it/134x134`
+        picture: `http://placehold.it/134x134`
       }
     ]
   }

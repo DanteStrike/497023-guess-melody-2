@@ -4,31 +4,35 @@ import QuestionArtistScreen from "./question-artist-screen.jsx";
 import {Provider} from "react-redux";
 import {createStore} from "redux";
 
-const store = createStore(() => ({
+const gameStore = {
   mistakes: 0,
   gameTimeRemaining: 0
+};
+
+const store = createStore(() => ({
+  game: gameStore
 }));
+
 
 it(`render correctly QuestionArtistScreen component`, () => {
   const questionMock = {
-    id: 1,
     type: `artist`,
     song: {
-      artist: `Plаcido Domingo`,
-      src: ``
+      artist: `any`,
+      src: `any`
     },
     answers: [
       {
-        artist: `Jose Carreras`,
-        image: ``
+        artist: `any`,
+        picture: `any`
       },
       {
-        artist: `Luciano Pavarotti`,
-        image: ``
+        artist: `any`,
+        picture: `any`
       },
       {
-        artist: `Plаcido Domingo`,
-        image: ``
+        artist: `any`,
+        picture: `any`
       }
     ]
   };
@@ -37,6 +41,7 @@ it(`render correctly QuestionArtistScreen component`, () => {
     .create(
         <Provider store={store}>
           <QuestionArtistScreen
+            id={1}
             question={questionMock}
             onAnswerClick={jest.fn()}
             renderAudioPlayer={jest.fn()}

@@ -93,18 +93,18 @@ exports[`render correctly QuestionArtistScreen component 1`] = `
           name="answer"
           onChange={[Function]}
           type="radio"
-          value="Jose Carreras"
+          value="any"
         />
         <label
           className="artist__name"
           htmlFor="answer-0"
         >
           <img
-            alt="Jose Carreras"
+            alt="any"
             className="artist__picture"
-            src=""
+            src="any"
           />
-          Jose Carreras
+          any
         </label>
       </div>
       <div
@@ -116,18 +116,18 @@ exports[`render correctly QuestionArtistScreen component 1`] = `
           name="answer"
           onChange={[Function]}
           type="radio"
-          value="Luciano Pavarotti"
+          value="any"
         />
         <label
           className="artist__name"
           htmlFor="answer-1"
         >
           <img
-            alt="Luciano Pavarotti"
+            alt="any"
             className="artist__picture"
-            src=""
+            src="any"
           />
-          Luciano Pavarotti
+          any
         </label>
       </div>
       <div
@@ -139,18 +139,18 @@ exports[`render correctly QuestionArtistScreen component 1`] = `
           name="answer"
           onChange={[Function]}
           type="radio"
-          value="Plаcido Domingo"
+          value="any"
         />
         <label
           className="artist__name"
           htmlFor="answer-2"
         >
           <img
-            alt="Plаcido Domingo"
+            alt="any"
             className="artist__picture"
-            src=""
+            src="any"
           />
-          Plаcido Domingo
+          any
         </label>
       </div>
     </form>

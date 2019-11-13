@@ -7,16 +7,15 @@ Enzyme.configure({adapter: new Adapter()});
 
 describe(`QuestionGenreScreen should work correctly`, () => {
   const questionMock = {
-    id: 1,
     type: `genre`,
     genre: `jazz`,
     answers: [
       {
-        src: ``,
+        src: `any`,
         genre: `jazz`
       },
       {
-        src: ``,
+        src: `any`,
         genre: `pop`
       }
     ]
@@ -40,6 +39,7 @@ describe(`QuestionGenreScreen should work correctly`, () => {
 
     component = shallow(
         <QuestionGenreScreen
+          id={1}
           question={questionMock}
           onAnswerClick={onAnswerClick}
           userAnswers={userAnswers}
