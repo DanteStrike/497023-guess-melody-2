@@ -1,5 +1,5 @@
 import axios from "axios";
-import {Time} from "./utils/time/time";
+import {Time} from "../utils/time/time";
 
 const configureAPI = () => {
   const api = axios.create({
