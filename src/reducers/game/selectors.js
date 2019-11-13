@@ -1,7 +1,13 @@
-const checkIsGameTimeLeft = (game) => {
-  return game.gameTimeRemaining === 0;
-};
+import {createSelector} from "reselect";
+
+const getGameTimeRemaining = (game) => game.gameTimeRemaining;
+
+const checkIsGameTimeLeft = createSelector(
+    [getGameTimeRemaining],
+    (gameTimeRemaining) => gameTimeRemaining === 0
+);
 
 export default {
-  checkIsGameTimeLeft
+  checkIsGameTimeLeft,
+  getGameTimeRemaining
 };

@@ -3,7 +3,8 @@ import utils from "./utils.js";
 import actions from "./actions.js";
 import selectors from "./selectors.js";
 import reducer from "./reducers.js";
-import {Time} from "../../utils/time/time";
+import {Time} from "../../utils/time/time.js";
+import {updateObject} from "../../utils/object/object.js";
 
 const questionGenreMock = {
   type: `genre`,
@@ -125,6 +126,10 @@ describe(`Reducers: Game actions`, () => {
 });
 
 describe(`Reducers: Game selectors`, () => {
+  it(`Selector getGameTimeRemaining should return gameTimeRemaining`, () => {
+    expect(selectors.getGameTimeRemaining({gameTimeRemaining: 99})).toBe(99);
+  });
+
   it(`Selector checkIsGameTimeLeft should check correctly`, () => {
     expect(selectors.checkIsGameTimeLeft({gameTimeRemaining: -1}))
       .toEqual(false);
