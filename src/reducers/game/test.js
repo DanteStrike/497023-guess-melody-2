@@ -208,7 +208,7 @@ describe(`Reducers: Game reducers`, () => {
 
   it(`Reducer gameTimeReducer should decrease game time by a given value`, () => {
     const timestamp = 5 * Time.MILLISECONDS_IN_MINUTE;
-    const timeSetState = Object.assign({}, initState, {gameTimeRemaining: timestamp});
+    const timeSetState = updateObject(initState, {gameTimeRemaining: timestamp});
     const action = {
       type: types.DECREASE_GAME_TIME,
       payload: Time.MILLISECONDS_IN_SECOND
