@@ -25,7 +25,7 @@ it(`render correctly App component`, () => {
     .create(
         <Provider store={store}>
           <App
-            gameTimeMinutes={1}
+            isGameTimeLeft={1}
             maxMistakes={1}
             onUserAnswerClick={jest.fn}
             onWelcomeScreenClick={jest.fn}

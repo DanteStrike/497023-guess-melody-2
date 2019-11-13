@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import {gameActions} from "../../reducers/game/index.js";
+import {gameActions, gameSelectors} from "../../reducers/game/index.js";
 import {Time} from "../../utils/time/time.js";
 import Timer from "../../utils/timer/timer.js";
 import {compose} from "recompose";
@@ -20,11 +20,6 @@ const QuestionGenreScreenWrapped = compose(
 )(QuestionGenreScreen);
 
 class App extends React.Component {
-  shouldComponentUpdate(nextProps) {
-    const {step, mistakes} = this.props;
-    return step !== nextProps.step || mistakes !== nextProps.mistakes || nextProps.gameTimeRemaining === 0;
-  }
-
   _getScreen() {
     const {questions, step, gameTimeMinutes, gameTimeRemaining, mistakes, maxMistakes, onGameResetClick} = this.props;
     const gameTimestamp = gameTimeMinutes * Time.MILLISECONDS_IN_MINUTE;
@@ -132,7 +127,7 @@ App.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  gameTimeRemaining: state.game.gameTimeRemaining,
+  isGameTimeLeft: gameSelectors.checkIsGameTimeLeft(state.game),
   step: state.game.step,
   mistakes: state.game.mistakes,
   questions: state.questions.questions
