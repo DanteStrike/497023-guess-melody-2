@@ -21,7 +21,7 @@ const QuestionGenreScreenWrapped = compose(
 
 class App extends React.Component {
   _getScreen() {
-    const {questions, step, gameTimeMinutes, gameTimeRemaining, mistakes, maxMistakes, onGameResetClick} = this.props;
+    const {questions, step, gameTimeMinutes, isGameTimeLeft, mistakes, maxMistakes, onGameResetClick} = this.props;
     const gameTimestamp = gameTimeMinutes * Time.MILLISECONDS_IN_MINUTE;
     const maxSteps = questions.length;
 
@@ -36,10 +36,10 @@ class App extends React.Component {
       );
     }
 
-    if (gameTimeRemaining === 0 || mistakes > maxMistakes) {
+    if (isGameTimeLeft || mistakes > maxMistakes) {
       return (
         <GameOverScreen
-          isTimeOver={gameTimeRemaining === 0}
+          isTimeOver={isGameTimeLeft}
           onResetGameClick={() => onGameResetClick()}
         />
       );
@@ -48,7 +48,7 @@ class App extends React.Component {
     if (step === maxSteps) {
       return (
         <WinScreen
-          gameDuration={gameTimestamp - gameTimeRemaining}
+          gameDuration={0}
           mistakes={mistakes}
           result={0}
           fastAnswersAmount={0}
@@ -93,7 +93,6 @@ App.propTypes = {
   maxMistakes: PropTypes.number.isRequired,
   questions: PropTypes.arrayOf(PropTypes.oneOfType([
     PropTypes.exact({
-      // id: PropTypes.number.isRequired,
       type: PropTypes.oneOf([`genre`]),
       genre: PropTypes.string.isRequired,
       answers: PropTypes.arrayOf(
@@ -104,7 +103,6 @@ App.propTypes = {
       )
     }),
     PropTypes.exact({
-      // id: PropTypes.number.isRequired,
       type: PropTypes.oneOf([`artist`]),
       song: PropTypes.exact({
         artist: PropTypes.string.isRequired,
@@ -120,7 +118,7 @@ App.propTypes = {
   ])),
   step: PropTypes.number.isRequired,
   mistakes: PropTypes.number.isRequired,
-  gameTimeRemaining: PropTypes.number.isRequired,
+  isGameTimeLeft: PropTypes.bool.isRequired,
   onWelcomeScreenClick: PropTypes.func.isRequired,
   onUserAnswerClick: PropTypes.func.isRequired,
   onGameResetClick: PropTypes.func.isRequired
