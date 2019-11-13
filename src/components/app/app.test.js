@@ -27,6 +27,7 @@ it(`render correctly App component`, () => {
           <App
             isGameTimeLeft={1}
             maxMistakes={1}
+            gameTimeMinutes={1}
             onUserAnswerClick={jest.fn}
             onWelcomeScreenClick={jest.fn}
             onGameResetClick={jest.fn}

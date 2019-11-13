@@ -39,6 +39,7 @@ exports[`render correctly App component 1`] = `
   >
     <li>
       За 
+      1
        минут нужно ответить на все вопросы.
     </li>
     <li>
