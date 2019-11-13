@@ -1,12 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import GameHeader from "../game-header/game-header.jsx";
+import {Question} from "../../utils/enum.js";
 
 class QuestionArtistScreen extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    this._audioPlayerID = 0;
+    this._audioPlayerID = Question.defaultPlayerID;
 
     this._answerChangeHandler = this._answerChangeHandler.bind(this);
   }

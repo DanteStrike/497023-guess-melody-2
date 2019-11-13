@@ -1,3 +1,4 @@
+import {Question} from "../../utils/enum.js";
 import types from "./types.js";
 import utils from "./utils.js";
 
@@ -20,10 +21,10 @@ const incrementMistakes = (userChoice, question, mistakes, maxMistakes, gameTime
   let answerIsCorrect = false;
 
   switch (question.type) {
-    case `artist`:
+    case Question.Type.ARTIST:
       answerIsCorrect = utils.isArtistAnswerCorrect(userChoice, question);
       break;
-    case `genre`:
+    case Question.Type.GENRE:
       answerIsCorrect = utils.isGenreAnswersCorrect(userChoice, question);
       break;
   }

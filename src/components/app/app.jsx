@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import {gameActions, gameSelectors} from "../../reducers/game/index.js";
 import {Time} from "../../utils/time/time.js";
 import Timer from "../../utils/timer/timer.js";
+import {Question} from "../../utils/enum.js";
 import {compose} from "recompose";
 import WelcomeScreen from "../welcome-screen/welcome-screen.jsx";
 import QuestionGenreScreen from "../question-genre-screen/question-genre-screen.jsx";
@@ -60,7 +61,7 @@ class App extends React.Component {
     const {onUserAnswerClick} = this.props;
     const question = questions[step];
     switch (question.type) {
-      case `genre`:
+      case Question.Type.GENRE:
         return (
           <QuestionGenreScreenWrapped
             id={step}
@@ -69,7 +70,7 @@ class App extends React.Component {
           />
         );
 
-      case `artist`:
+      case Question.Type.ARTIST:
         return (
           <QuestionArtistScreenWrapped
             id={step}
