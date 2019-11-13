@@ -19,8 +19,8 @@ class QuestionArtistScreen extends React.PureComponent {
 
   render() {
     const {
+      id,
       question: {
-        id,
         song,
         answers,
       },
@@ -45,7 +45,7 @@ class QuestionArtistScreen extends React.PureComponent {
                 <input className="artist__input visually-hidden" type="radio" name="answer" value={answer.artist}
                   id={`answer-${index}`} onChange={this._answerChangeHandler}/>
                 <label className="artist__name" htmlFor={`answer-${index}`}>
-                  <img className="artist__picture" src={answer.image} alt={answer.artist}/>
+                  <img className="artist__picture" src={answer.picture} alt={answer.artist}/>
                   {answer.artist}
                 </label>
               </div>
@@ -58,8 +58,8 @@ class QuestionArtistScreen extends React.PureComponent {
 }
 
 QuestionArtistScreen.propTypes = {
+  id: PropTypes.number.isRequired,
   question: PropTypes.exact({
-    id: PropTypes.number.isRequired,
     type: PropTypes.oneOf([`artist`]),
     song: PropTypes.exact({
       artist: PropTypes.string.isRequired,
@@ -68,7 +68,7 @@ QuestionArtistScreen.propTypes = {
     answers: PropTypes.arrayOf(
         PropTypes.exact({
           artist: PropTypes.string.isRequired,
-          image: PropTypes.string.isRequired
+          picture: PropTypes.string.isRequired
         })
     ),
   }),

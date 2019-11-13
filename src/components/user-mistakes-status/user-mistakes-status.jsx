@@ -21,7 +21,7 @@ UserMistakesStatus.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  mistakes: state.mistakes
+  mistakes: state.game.mistakes
 });
 
 export {UserMistakesStatus};

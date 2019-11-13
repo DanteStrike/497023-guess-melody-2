@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import {ActionCreator} from "../../reducer/reducer.js";
+import {gameActions} from "../../reducers/game/index.js";
 import {Time} from "../../utils/time/time.js";
 import Timer from "../../utils/timer/timer.js";
 import {compose} from "recompose";
@@ -68,6 +68,7 @@ class App extends React.Component {
       case `genre`:
         return (
           <QuestionGenreScreenWrapped
+            id={step}
             question={question}
             onAnswerClick={(userChoice) => onUserAnswerClick(userChoice, question, mistakes, maxMistakes, step, maxSteps)}
           />
@@ -76,6 +77,7 @@ class App extends React.Component {
       case `artist`:
         return (
           <QuestionArtistScreenWrapped
+            id={step}
             question={question}
             onAnswerClick={(userChoice) => onUserAnswerClick(userChoice, question, mistakes, maxMistakes, step, maxSteps)}
           />
@@ -130,28 +132,28 @@ App.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  gameTimeRemaining: state.gameTimeRemaining,
-  step: state.step,
-  mistakes: state.mistakes,
-  questions: state.questions
+  gameTimeRemaining: state.game.gameTimeRemaining,
+  step: state.game.step,
+  mistakes: state.game.mistakes,
+  questions: state.questions.questions
 });
 
 const mapDispatchToProps = (dispatch) => {
   const onTick = (timeTick, timeRemaining) => {
-    dispatch(ActionCreator.decreaseGameTime(timeTick, timeRemaining));
+    dispatch(gameActions.decreaseGameTime(timeTick, timeRemaining));
   };
   const gameTimer = new Timer(0, Time.MILLISECONDS_IN_SECOND, onTick);
 
   return {
     onWelcomeScreenClick: (step, maxSteps, gameTime) => {
-      dispatch(ActionCreator.setGameTime(gameTime, gameTimer));
-      dispatch(ActionCreator.incrementStep(step, maxSteps, gameTimer));
+      dispatch(gameActions.setGameTime(gameTime, gameTimer));
+      dispatch(gameActions.incrementStep(step, maxSteps, gameTimer));
     },
     onUserAnswerClick: (userChoice, question, mistakes, maxMistakes, step, maxSteps) => {
-      dispatch(ActionCreator.incrementStep(step, maxSteps, gameTimer));
-      dispatch(ActionCreator.incrementMistakes(userChoice, question, mistakes, maxMistakes, gameTimer));
+      dispatch(gameActions.incrementStep(step, maxSteps, gameTimer));
+      dispatch(gameActions.incrementMistakes(userChoice, question, mistakes, maxMistakes, gameTimer));
     },
-    onGameResetClick: () => dispatch(ActionCreator.resetGame())
+    onGameResetClick: () => dispatch(gameActions.resetGame())
   };
 };
 

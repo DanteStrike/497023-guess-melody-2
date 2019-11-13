@@ -29,8 +29,8 @@ class QuestionGenreScreen extends React.PureComponent {
 
   render() {
     const {
+      id,
       question: {
-        id: quesID,
         genre,
         answers,
       },
@@ -47,7 +47,7 @@ class QuestionGenreScreen extends React.PureComponent {
           <h2 className="game__title">Выберите {genre} треки</h2>
           <form className="game__tracks" onSubmit={this._answersSubmitHandler}>
             {answers.map((answer, index) => (
-              <div className="track" key={`${quesID}-${index}-answer`}>
+              <div className="track" key={`${id}-${index}-answer`}>
                 {renderAudioPlayer(answer.src, index)}
                 <div className="game__answer">
                   <input type="checkbox" className="game__input visually-hidden" name="answer" id={`answer-${index}`}
@@ -65,14 +65,14 @@ class QuestionGenreScreen extends React.PureComponent {
 }
 
 QuestionGenreScreen.propTypes = {
+  id: PropTypes.number.isRequired,
   question: PropTypes.exact({
-    id: PropTypes.number.isRequired,
     type: PropTypes.oneOf([`genre`]),
-    genre: PropTypes.oneOf([`jazz`, `rock`, `pop`]),
+    genre: PropTypes.string.isRequired,
     answers: PropTypes.arrayOf(
         PropTypes.exact({
           src: PropTypes.string.isRequired,
-          genre: PropTypes.oneOf([`jazz`, `rock`, `pop`])
+          genre: PropTypes.string.isRequired
         })
     )
   }),
