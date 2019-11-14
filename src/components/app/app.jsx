@@ -17,7 +17,7 @@ import withUserAnswers from "../../hocs/with-user-answers/with-user-answers.jsx"
 const QuestionArtistScreenWrapped = withActivePlayer(QuestionArtistScreen);
 const QuestionGenreScreenWrapped = compose(
     withActivePlayer,
-    withUserAnswers
+    withUserAnswers(Question.Genre.ANSWERS_AMOUNT)
 )(QuestionGenreScreen);
 
 class App extends React.Component {

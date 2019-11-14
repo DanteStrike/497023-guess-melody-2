@@ -8,7 +8,7 @@ Enzyme.configure({adapter: new Adapter()});
 describe(`HoC withUserAnswers should work correctly`, () => {
   let component;
   const MockComponent = () => <div/>;
-  const MockComponentWrapped = withUserAnswers(MockComponent);
+  const MockComponentWrapped = withUserAnswers(4)(MockComponent);
 
   beforeEach(() => {
     component = shallow(<MockComponentWrapped/>);

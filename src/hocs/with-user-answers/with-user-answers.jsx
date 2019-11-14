@@ -1,7 +1,7 @@
 import React from "react";
 import {newArray} from "../../utils/array/array.js";
 
-const withUserAnswers = (WrappedComponent, answersAmount = 4) => {
+const withUserAnswers = (answersAmount) => (WrappedComponent) => {
   class WithUserAnswers extends React.PureComponent {
     constructor(props) {
       super(props);
