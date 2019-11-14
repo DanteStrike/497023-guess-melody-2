@@ -1,8 +1,11 @@
 export const Question = {
-  Type: {
-    ARTIST: `artist`,
-    GENRE: `genre`
+  Artist: {
+    TYPE: `artist`,
+    PLAYER_ID: 0
   },
 
-  defaultPlayerID: 0
+  Genre: {
+    TYPE: `genre`,
+    ANSWERS_AMOUNT: 4
+  }
 };

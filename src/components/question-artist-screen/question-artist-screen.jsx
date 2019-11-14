@@ -7,7 +7,7 @@ class QuestionArtistScreen extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    this._audioPlayerID = Question.defaultPlayerID;
+    this._audioPlayerID = Question.Artist.PLAYER_ID;
 
     this._answerChangeHandler = this._answerChangeHandler.bind(this);
   }

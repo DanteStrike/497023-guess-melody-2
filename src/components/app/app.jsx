@@ -61,7 +61,7 @@ class App extends React.Component {
     const {onUserAnswerClick} = this.props;
     const question = questions[step];
     switch (question.type) {
-      case Question.Type.GENRE:
+      case Question.Genre.TYPE:
         return (
           <QuestionGenreScreenWrapped
             id={step}
@@ -70,7 +70,7 @@ class App extends React.Component {
           />
         );
 
-      case Question.Type.ARTIST:
+      case Question.Artist.TYPE:
         return (
           <QuestionArtistScreenWrapped
             id={step}

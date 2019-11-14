@@ -21,10 +21,10 @@ const incrementMistakes = (userChoice, question, mistakes, maxMistakes, gameTime
   let answerIsCorrect = false;
 
   switch (question.type) {
-    case Question.Type.ARTIST:
+    case Question.Artist.TYPE:
       answerIsCorrect = utils.isArtistAnswerCorrect(userChoice, question);
       break;
-    case Question.Type.GENRE:
+    case Question.Genre.TYPE:
       answerIsCorrect = utils.isGenreAnswersCorrect(userChoice, question);
       break;
   }
