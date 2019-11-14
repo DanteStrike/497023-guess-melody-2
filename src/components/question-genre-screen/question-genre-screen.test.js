@@ -6,7 +6,7 @@ import {createStore} from "redux";
 
 const gameStore = {
   mistakes: 0,
-  gameTimeRemaining: 0
+  timeRemaining: 0
 };
 
 const store = createStore(() => ({

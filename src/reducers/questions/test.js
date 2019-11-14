@@ -1,5 +1,6 @@
 import types from "./types.js";
 import actions from "./actions.js";
+import selectors from "./selectors.js";
 import operations from "./operations.js";
 import reducer from "./reducers.js";
 import MockAdapter from "axios-mock-adapter";
@@ -12,6 +13,13 @@ describe(`Reducers: Questions actions`, () => {
       type: types.LOAD_QUESTIONS,
       payload: [{any: `any`}]
     });
+  });
+});
+
+describe(`Reducers: Questions selectors`, () => {
+  it(`Selector getQuestions should return questions`, () => {
+    expect(selectors.getQuestions({questions: {questions: [{any: `any`}]}}))
+    .toEqual([{any: `any`}]);
   });
 });
 

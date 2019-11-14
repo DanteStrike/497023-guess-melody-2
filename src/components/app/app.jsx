@@ -1,11 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import {gameActions, gameSelectors} from "../../reducers/game/index.js";
+import {compose} from "recompose";
+
 import {Time} from "../../utils/time/time.js";
 import Timer from "../../utils/timer/timer.js";
 import {Question} from "../../utils/enum.js";
-import {compose} from "recompose";
+
+import {gameActions, gameSelectors} from "../../reducers/game/index.js";
+import {questionsSelectors} from "../../reducers/questions/index.js";
+
 import WelcomeScreen from "../welcome-screen/welcome-screen.jsx";
 import QuestionGenreScreen from "../question-genre-screen/question-genre-screen.jsx";
 import QuestionArtistScreen from "../question-artist-screen/question-artist-screen.jsx";
@@ -126,10 +130,10 @@ App.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  isGameTimeLeft: gameSelectors.checkIsGameTimeLeft(state.game),
-  step: state.game.step,
-  mistakes: state.game.mistakes,
-  questions: state.questions.questions
+  isGameTimeLeft: gameSelectors.checkIsGameTimeLeft(state),
+  step: gameSelectors.getGameStep(state),
+  mistakes: gameSelectors.getGameMistakes(state),
+  questions: questionsSelectors.getQuestions(state)
 });
 
 const mapDispatchToProps = (dispatch) => {

@@ -1,13 +1,18 @@
 import {createSelector} from "reselect";
 
-const getGameTimeRemaining = (game) => game.gameTimeRemaining;
+
+const getGameStep = (state) => state.game.step;
+const getGameMistakes = (state) => state.game.mistakes;
+const getGameTimeRemaining = (state) => state.game.timeRemaining;
 
 const checkIsGameTimeLeft = createSelector(
-    [getGameTimeRemaining],
-    (gameTimeRemaining) => gameTimeRemaining === 0
+    getGameTimeRemaining,
+    (timeRemaining) => timeRemaining === 0
 );
 
 export default {
+  getGameStep,
+  getGameMistakes,
+  getGameTimeRemaining,
   checkIsGameTimeLeft,
-  getGameTimeRemaining
 };

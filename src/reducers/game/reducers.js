@@ -28,7 +28,7 @@ const mistakesReducer = (state = 0, action) => {
   }
 };
 
-const gameTimeReducer = (state = -1, action) => {
+const timeReducer = (state = -1, action) => {
   switch (action.type) {
     case types.SET_GAME_TIME:
       return action.payload;
@@ -47,7 +47,7 @@ const gameTimeReducer = (state = -1, action) => {
 const reducer = combineReducers({
   step: stepReducer,
   mistakes: mistakesReducer,
-  gameTimeRemaining: gameTimeReducer
+  timeRemaining: timeReducer
 });
 
 

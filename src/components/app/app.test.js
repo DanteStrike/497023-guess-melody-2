@@ -8,7 +8,7 @@ import {createStore} from "redux";
 const gameState = {
   step: -1,
   mistakes: 0,
-  gameTimeRemaining: 0
+  timeRemaining: 0
 };
 
 const questionsState = {

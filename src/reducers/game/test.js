@@ -126,16 +126,24 @@ describe(`Reducers: Game actions`, () => {
 });
 
 describe(`Reducers: Game selectors`, () => {
-  it(`Selector getGameTimeRemaining should return gameTimeRemaining`, () => {
-    expect(selectors.getGameTimeRemaining({gameTimeRemaining: 99})).toBe(99);
+  it(`Selector getGameStep should return game step`, () => {
+    expect(selectors.getGameStep({game: {step: 10}})).toBe(10);
+  });
+
+  it(`Selector getGameMistakes should return game mistakes`, () => {
+    expect(selectors.getGameMistakes({game: {mistakes: 20}})).toBe(20);
+  });
+
+  it(`Selector getGameTimeRemaining should return game timeRemaining`, () => {
+    expect(selectors.getGameTimeRemaining({game: {timeRemaining: 30}})).toBe(30);
   });
 
   it(`Selector checkIsGameTimeLeft should check correctly`, () => {
-    expect(selectors.checkIsGameTimeLeft({gameTimeRemaining: -1}))
+    expect(selectors.checkIsGameTimeLeft({game: {timeRemaining: -1}}))
       .toEqual(false);
-    expect(selectors.checkIsGameTimeLeft({gameTimeRemaining: 1}))
+    expect(selectors.checkIsGameTimeLeft({game: {timeRemaining: 1}}))
       .toEqual(false);
-    expect(selectors.checkIsGameTimeLeft({gameTimeRemaining: 0}))
+    expect(selectors.checkIsGameTimeLeft({game: {timeRemaining: 0}}))
       .toEqual(true);
   });
 
@@ -148,7 +156,7 @@ describe(`Reducers: Game reducers`, () => {
     initState = {
       step: -1,
       mistakes: 0,
-      gameTimeRemaining: -1
+      timeRemaining: -1
     };
   });
 
@@ -165,12 +173,12 @@ describe(`Reducers: Game reducers`, () => {
     expect(reducer(initState, actionPayloadOne)).toEqual({
       step: 0,
       mistakes: 0,
-      gameTimeRemaining: -1
+      timeRemaining: -1
     });
     expect(reducer(initState, actionPayloadZero)).toEqual({
       step: -1,
       mistakes: 0,
-      gameTimeRemaining: -1
+      timeRemaining: -1
     });
   });
 
@@ -188,12 +196,12 @@ describe(`Reducers: Game reducers`, () => {
     expect(reducer(initState, actionPayloadOne)).toEqual({
       step: -1,
       mistakes: 1,
-      gameTimeRemaining: -1
+      timeRemaining: -1
     });
     expect(reducer(initState, actionPayloadZero)).toEqual({
       step: -1,
       mistakes: 0,
-      gameTimeRemaining: -1
+      timeRemaining: -1
     });
   });
 
@@ -207,13 +215,13 @@ describe(`Reducers: Game reducers`, () => {
     expect(reducer(initState, action)).toEqual({
       step: -1,
       mistakes: 0,
-      gameTimeRemaining: timestamp
+      timeRemaining: timestamp
     });
   });
 
   it(`Reducer gameTimeReducer should decrease game time by a given value`, () => {
     const timestamp = 5 * Time.MILLISECONDS_IN_MINUTE;
-    const timeSetState = updateObject(initState, {gameTimeRemaining: timestamp});
+    const timeSetState = updateObject(initState, {timeRemaining: timestamp});
     const action = {
       type: types.DECREASE_GAME_TIME,
       payload: Time.MILLISECONDS_IN_SECOND
@@ -222,7 +230,7 @@ describe(`Reducers: Game reducers`, () => {
     expect(reducer(timeSetState, action)).toEqual({
       step: -1,
       mistakes: 0,
-      gameTimeRemaining: timestamp - Time.MILLISECONDS_IN_SECOND
+      timeRemaining: timestamp - Time.MILLISECONDS_IN_SECOND
     });
   });
 
@@ -230,7 +238,7 @@ describe(`Reducers: Game reducers`, () => {
     const inGameState = {
       step: 1,
       mistakes: 1,
-      gameTimeRemaining: 1
+      timeRemaining: 1
     };
     const action = {
       type: types.RESET_GAME

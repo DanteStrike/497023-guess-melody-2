@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {formatTimeToMS} from "../../utils/time/time.js";
+import {gameSelectors} from "../../reducers/game/index.js";
 
 class GameTimer extends React.PureComponent {
   render() {
@@ -23,7 +24,7 @@ GameTimer.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  gameTimeRemaining: state.game.gameTimeRemaining
+  gameTimeRemaining: gameSelectors.getGameTimeRemaining(state)
 });
 
 export {GameTimer};
